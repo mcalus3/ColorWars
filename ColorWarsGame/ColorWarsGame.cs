@@ -51,6 +51,7 @@ namespace ColorWars
             foreach (Player player in this.playerList)
             {
                 this.graphics.AddRenderer(player);
+                this.graphics.AddRenderer(player.tail);
             }
         }
 

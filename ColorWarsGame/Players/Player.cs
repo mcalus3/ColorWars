@@ -10,22 +10,35 @@ namespace ColorWars
     class Player : IPlayer
     {
         private Color color;
-        private BoardField position;
+        internal BoardField position;
         private readonly BoardField startField;
         private Direction direction;
-        private Tail tail;
+        public Tail tail;
         public static readonly IPlayer MISSING = new MissingPlayer();
         private int movementAccumulator;
+
+        internal void AddTerritory()
+        {
+            foreach(BoardField field in this.tail.positions)
+            {
+                field.owner = this;
+            }
+            tail.Delete();
+        }
+
         private int speed; // interval between moves in frames
+        internal IPlayerState state;
 
         public Player(Color color, BoardField startField, int speed)
         {
+            this.tail = new Tail(this);
             this.color = color;
             this.position = startField;
             this.startField = startField;
             this.direction = Direction.UP;
             this.speed = speed;
             this.movementAccumulator = -2 * speed;
+            this.state = new DefensiveState(this);
         }
 
         public void ChangeDirection(Direction newDirection)
@@ -40,20 +53,28 @@ namespace ColorWars
             {
                 if (this.position.GetNeighbor(this.direction) == null)
                 {
-                    this.Kill();
+                    this.Kill(this);
                 }
                 else
                 {
                     this.movementAccumulator = 0;
+                    this.state.OnMovement();
                     this.position = this.position.GetNeighbor(this.direction);
+                    this.position.OnPlayerEntered(this);
                 }
             }
         }
 
-        public void Kill()
+        public void Kill(Player killer)
         {
-            this.movementAccumulator = this.speed * -30; // penalty for death - respawn after 30 moves. To be moved to config.
+            this.movementAccumulator = this.speed * -1; // penalty for death - re spawn after 30 moves. To be moved to config.
             this.position = this.startField;
+            this.tail.Delete();
+        }
+
+        internal void SpawnTail()
+        {
+            this.tail.AddField(this.position);
         }
 
         public Color GetColor()

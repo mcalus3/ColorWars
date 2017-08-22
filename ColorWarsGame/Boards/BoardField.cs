@@ -10,7 +10,7 @@ namespace ColorWars
     class BoardField: ISquareDrawable
     {
         private Point position;
-        private IPlayer owner;
+        public IPlayer owner;
         private Dictionary<Direction, BoardField> neighbors;
         public event EventHandler PlayerEntered;
 
@@ -54,6 +54,12 @@ namespace ColorWars
             newColor.B = (byte)Math.Floor(color.B * 0.5);
             newColor.A = 0;
             return newColor;
+        }
+
+        internal void OnPlayerEntered(Player player)
+        {
+            if (this.PlayerEntered != null)
+                this.PlayerEntered(player, new EventArgs());
         }
     }
 }

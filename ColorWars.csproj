@@ -64,6 +64,8 @@
     <Compile Include="ColorWarsGame\ColorWarsGame.cs" />
     <Compile Include="ColorWarsGame\ColorWarsSettings.cs" />
     <Compile Include="ColorWarsGame\Boards\Direction.cs" />
+    <Compile Include="ColorWarsGame\Players\AttackingState.cs" />
+    <Compile Include="ColorWarsGame\Players\IPlayerState.cs" />
     <Compile Include="ColorWarsGame\Players\MissingPlayer.cs" />
     <Compile Include="ColorWarsGame\Boards\GameBoard.cs" />
     <Compile Include="ColorWarsGame\Graphics\GameRenderer.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="ColorWarsGame\Players\Player.cs" />
     <Compile Include="ColorWarsGame\Controllers\PlayerMoveCommand.cs" />
     <Compile Include="ColorWarsGame\Players\PlayerSettings.cs" />
+    <Compile Include="ColorWarsGame\Players\DefensiveState.cs" />
     <Compile Include="ColorWarsGame\Program.cs" />
     <Compile Include="ColorWarsGame\Graphics\ISquareDrawable.cs" />
     <Compile Include="ColorWarsGame\Graphics\SquareRenderer.cs" />

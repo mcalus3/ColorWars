@@ -22,7 +22,7 @@ namespace ColorWars
                 windowSize = new Point(600, 600),
                 playerSettings = new PlayerSettings[] {
                     new PlayerSettings() {
-                        speed = 20,
+                        speed = 10,
                         color = Color.Blue,
                         keyMapping = new Dictionary<Keys, Direction>() {
                             { Keys.Up, Direction.UP },
@@ -32,7 +32,7 @@ namespace ColorWars
                         }
                     },
                     new PlayerSettings() {
-                        speed = 20,
+                        speed = 10,
                         color = Color.Green,
                         keyMapping = new Dictionary<Keys, Direction>() {
                             { Keys.W, Direction.UP },

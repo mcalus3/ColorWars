@@ -34,7 +34,7 @@ namespace ColorWars
             //for every field that rendered object is occupying write a rectangle covering whole field
             foreach (Point field in this.renderedObject.GetPoints())
             {
-                spriteBatch.Draw(this.texture, this.GetRectangleFromField(field), Color.White);
+                spriteBatch.Draw(this.texture, this.GetRectangleFromField(field), this.renderedObject.GetColor());
             }
             spriteBatch.End();
         }
