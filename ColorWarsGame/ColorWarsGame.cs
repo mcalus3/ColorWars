@@ -1,83 +1,95 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace ColorWars
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
-    public class ColorWarsGame : Game
+    class ColorWarsGame : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        
-        public ColorWarsGame()
+        private GameRenderer graphics;
+        private List<Player> playerList;
+        private GameBoard gameBoard;
+        private ColorWarsSettings settings;
+        private InputController inputController;
+        private int movementAccumulator = 0; //number of refreshes after which game tick runs
+
+        public ColorWarsGame(ColorWarsSettings settings)
         {
-            graphics = new GraphicsDeviceManager(this);
+            this.settings = settings;
+            this.playerList = new List<Player>();
+            this.gameBoard = new GameBoard();
+            this.graphics = new GameRenderer(new GraphicsDeviceManager(this), this.settings.dimension);
+            this.inputController = new InputController();
             Content.RootDirectory = "Content";
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            this.gameBoard.InitializeEmptyBoard(this.settings.dimension);
+            BoardField[] startFields = this.gameBoard.GetStartFields();
+
+            for (var i = 0; i < settings.playerSettings.Length; i++)
+            {
+                var newPlayer = new Player(settings.playerSettings[i].color, startFields[i]);
+                this.playerList.Add(newPlayer);
+                this.inputController.AddInputCommand(new PlayerMoveCommand(settings.playerSettings[i].keyMapping, newPlayer));
+
+            }
+
+            this.gameBoard.ClaimStartingTerritories(this.playerList.ToArray());
 
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            foreach (BoardField field in this.gameBoard.GetFields())
+            {
+                this.graphics.AddRenderer(field); //TODO: decide whether i need a factory here or leave creation centralized
+            }
+            foreach (Player player in this.playerList)
+            {
+                this.graphics.AddRenderer(player);
+            }
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
-
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-
+            this.inputController.ExecuteCommands();
+            this.EvaluateMovement();
+            
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
+        private void EvaluateMovement()
+        {
+            this.movementAccumulator++;
+            if (this.movementAccumulator == this.settings.speed) //To be moved to settings as speed
+            {
+                this.movementAccumulator = 0;
+                foreach (Player player in this.playerList)
+                {
+                    player.Move();
+                }
+            }
+        }
+
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
+            graphics.Draw();
 
             base.Draw(gameTime);
+        }
+
+        protected override void UnloadContent()
+        {
         }
     }
 }

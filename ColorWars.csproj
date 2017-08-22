@@ -60,8 +60,22 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ColorWarsGame\Boards\BoardField.cs" />
     <Compile Include="ColorWarsGame\ColorWarsGame.cs" />
+    <Compile Include="ColorWarsGame\ColorWarsSettings.cs" />
+    <Compile Include="ColorWarsGame\Boards\Direction.cs" />
+    <Compile Include="ColorWarsGame\Players\EmptyPlayer.cs" />
+    <Compile Include="ColorWarsGame\Boards\GameBoard.cs" />
+    <Compile Include="ColorWarsGame\Graphics\GameRenderer.cs" />
+    <Compile Include="ColorWarsGame\Controllers\InputController.cs" />
+    <Compile Include="ColorWarsGame\Players\IPlayer.cs" />
+    <Compile Include="ColorWarsGame\Players\Player.cs" />
+    <Compile Include="ColorWarsGame\Controllers\PlayerMoveCommand.cs" />
+    <Compile Include="ColorWarsGame\Players\PlayerSettings.cs" />
     <Compile Include="ColorWarsGame\Program.cs" />
+    <Compile Include="ColorWarsGame\Graphics\ISquareDrawable.cs" />
+    <Compile Include="ColorWarsGame\Graphics\SquareRenderer.cs" />
+    <Compile Include="ColorWarsGame\Players\Tail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +137,7 @@
     </None>
     <None Include="app.manifest" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
