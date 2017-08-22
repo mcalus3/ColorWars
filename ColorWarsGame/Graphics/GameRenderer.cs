@@ -10,18 +10,17 @@ namespace ColorWars
     class GameRenderer
     {
         private List<SquareRenderer> renderers;
-        private List<SquareRenderer> renderers2;
         private GraphicsDeviceManager graphics;
         private Point mapDimension;
 
-        public GameRenderer(GraphicsDeviceManager gManager, Point mapDimension)
+        public GameRenderer(GraphicsDeviceManager gManager, Point mapDimension, Point windowSize)
         {
             this.graphics = gManager;
             this.mapDimension = mapDimension;
             this.renderers = new List<SquareRenderer>();
 
-            this.graphics.PreferredBackBufferWidth = 600;
-            this.graphics.PreferredBackBufferHeight = 600; // TODO: Change for settings-sourced
+            this.graphics.PreferredBackBufferWidth = windowSize.X;
+            this.graphics.PreferredBackBufferHeight = windowSize.Y;
         }
 
         public void Draw()

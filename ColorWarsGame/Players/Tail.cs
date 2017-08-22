@@ -11,7 +11,7 @@ namespace ColorWars
     class Tail : ISquareDrawable
     {
         private List<BoardField> positions;
-        private IPlayer player;
+        private IPlayer owner;
 
         public void KillOwner(Player killer)
         {

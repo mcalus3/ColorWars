@@ -10,21 +10,23 @@ namespace ColorWars
     class GameBoard
     {
         private List<BoardField> board;
-        private Point[] startPoints;
-        private int StartingTerritorySize = 2; //TODO: Move to settings
+        private int startingTerritorySize;
+        private Point dimension;
 
-        public GameBoard()
+        public GameBoard(int startingTerritorySize, Point dimension)
         {
             this.board = new List<BoardField>();
+            this.startingTerritorySize = startingTerritorySize;
+            this.dimension = dimension;
         }
 
-        public void InitializeEmptyBoard(Point dimension)
+        public void InitializeEmptyBoard()
         {
-            for (int i = 0; i < dimension.X; i++)
+            for (int i = 0; i < this.dimension.X; i++)
             {
-                for (int j = 0; j < dimension.Y; j++)
+                for (int j = 0; j < this.dimension.Y; j++)
                 {
-                    this.board.Add(new BoardField(Player.EMPTY, new Point(i, j)));
+                    this.board.Add(new BoardField(Player.MISSING, new Point(i, j)));
                 }
             }
             foreach(BoardField field in this.board)
@@ -48,13 +50,12 @@ namespace ColorWars
         public BoardField[] GetStartFields()
         {
             //TODO: Change to calculating even distance on a circle or random player placing
-            Point dimension = this.board.Last().GetPoints()[0]; //TODO: Change to more expressive LINQ query - get dimension of board
             var fields = new BoardField[]
             {
-                this.board.Single(field => field.GetPoints()[0] == new Point((int)(dimension.X/4),(int)(dimension.Y/4))),
-                this.board.Single(field => field.GetPoints()[0] == new Point((int)(dimension.X*3/4),(int)(dimension.Y*3/4))),
-                this.board.Single(field => field.GetPoints()[0] == new Point((int)(dimension.X*3/4),(int)(dimension.Y/4))),
-                this.board.Single(field => field.GetPoints()[0] == new Point((int)(dimension.X/4),(int)(dimension.Y*3/4))),
+                this.board.Single(field => field.GetPoints()[0] == new Point((int)(this.dimension.X/4),(int)(this.dimension.Y/4))),
+                this.board.Single(field => field.GetPoints()[0] == new Point((int)(this.dimension.X*3/4),(int)(this.dimension.Y*3/4))),
+                this.board.Single(field => field.GetPoints()[0] == new Point((int)(this.dimension.X*3/4),(int)(this.dimension.Y/4))),
+                this.board.Single(field => field.GetPoints()[0] == new Point((int)(this.dimension.X/4),(int)(this.dimension.Y*3/4))),
             };
             return fields;
         }
@@ -65,7 +66,7 @@ namespace ColorWars
             {
                 foreach(BoardField field in this.board)
                 {
-                    if (FieldCloserToPlayerThan(field, player, (int)(this.StartingTerritorySize * Math.Sqrt(2))) )
+                    if (FieldCloserToPlayerThan(field, player, (int)(this.startingTerritorySize * Math.Sqrt(2))) )
                     {
                         field.ChangeOwner(player);
                     }
@@ -89,9 +90,9 @@ namespace ColorWars
             }
         }
 
-        public List<BoardField> GetFields()
+        public BoardField[] GetFields()
         {
-            return this.board;
+            return this.board.ToArray();
         }
 
     }

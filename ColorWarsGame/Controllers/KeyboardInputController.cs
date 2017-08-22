@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ColorWars
 {
-    class InputController
+    class KeyboardInputController
     {
         private List<PlayerMoveCommand> commands;
 
-        public InputController()
+        public KeyboardInputController()
         {
             this.commands = new List<PlayerMoveCommand>();
         }

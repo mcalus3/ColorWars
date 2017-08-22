@@ -23,6 +23,7 @@ namespace ColorWars
             this.spriteBatch = new SpriteBatch(gdManager.GraphicsDevice);
             this.mapDimension = mapDimension;
 
+            //texture is one pixel with specified color
             this.texture = new Texture2D(gdManager.GraphicsDevice, 1, 1);
             this.texture.SetData(new[] { this.renderedObject.GetColor() });
         }
@@ -30,6 +31,7 @@ namespace ColorWars
         public void Draw()
         {
             spriteBatch.Begin();
+            //for every field that rendered object is occupying write a rectangle covering whole field
             foreach (Point field in this.renderedObject.GetPoints())
             {
                 spriteBatch.Draw(this.texture, this.GetRectangleFromField(field), Color.White);
@@ -37,6 +39,7 @@ namespace ColorWars
             spriteBatch.End();
         }
 
+        //returns rectangle covering given game field
         private Rectangle GetRectangleFromField(Point field)
         {
             int tileWidth = gdManager.GraphicsDevice.Viewport.Width / this.mapDimension.X;

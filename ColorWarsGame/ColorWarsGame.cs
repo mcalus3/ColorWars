@@ -12,30 +12,29 @@ namespace ColorWars
         private List<Player> playerList;
         private GameBoard gameBoard;
         private ColorWarsSettings settings;
-        private InputController inputController;
+        private KeyboardInputController inputController;
         private int movementAccumulator = 0; //number of refreshes after which game tick runs
 
         public ColorWarsGame(ColorWarsSettings settings)
         {
             this.settings = settings;
             this.playerList = new List<Player>();
-            this.gameBoard = new GameBoard();
-            this.graphics = new GameRenderer(new GraphicsDeviceManager(this), this.settings.dimension);
-            this.inputController = new InputController();
+            this.gameBoard = new GameBoard(this.settings.startingTerritorySize, this.settings.dimension);
+            this.graphics = new GameRenderer(new GraphicsDeviceManager(this), this.settings.dimension, this.settings.windowSize);
+            this.inputController = new KeyboardInputController();
             Content.RootDirectory = "Content";
         }
 
         protected override void Initialize()
         {
-            this.gameBoard.InitializeEmptyBoard(this.settings.dimension);
+            this.gameBoard.InitializeEmptyBoard();
             BoardField[] startFields = this.gameBoard.GetStartFields();
 
             for (var i = 0; i < settings.playerSettings.Length; i++)
             {
-                var newPlayer = new Player(settings.playerSettings[i].color, startFields[i]);
+                var newPlayer = new Player(settings.playerSettings[i].color, startFields[i], this.settings.playerSettings[i].speed);
                 this.playerList.Add(newPlayer);
                 this.inputController.AddInputCommand(new PlayerMoveCommand(settings.playerSettings[i].keyMapping, newPlayer));
-
             }
 
             this.gameBoard.ClaimStartingTerritories(this.playerList.ToArray());
@@ -62,22 +61,13 @@ namespace ColorWars
                 Exit();
 
             this.inputController.ExecuteCommands();
-            this.EvaluateMovement();
+
+            foreach (Player player in this.playerList)
+            {
+                player.Move();
+            }
             
             base.Update(gameTime);
-        }
-
-        private void EvaluateMovement()
-        {
-            this.movementAccumulator++;
-            if (this.movementAccumulator == this.settings.speed) //To be moved to settings as speed
-            {
-                this.movementAccumulator = 0;
-                foreach (Player player in this.playerList)
-                {
-                    player.Move();
-                }
-            }
         }
 
         /// <param name="gameTime">Provides a snapshot of timing values.</param>

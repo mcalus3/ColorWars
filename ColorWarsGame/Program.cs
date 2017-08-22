@@ -17,10 +17,12 @@ namespace ColorWars
         static void Main()
         {
             var settings = new ColorWarsSettings() {
-                speed = 20,
+                startingTerritorySize = 2,
                 dimension = new Point(30,30),
+                windowSize = new Point(600, 600),
                 playerSettings = new PlayerSettings[] {
                     new PlayerSettings() {
+                        speed = 20,
                         color = Color.Blue,
                         keyMapping = new Dictionary<Keys, Direction>() {
                             { Keys.Up, Direction.UP },
@@ -30,6 +32,7 @@ namespace ColorWars
                         }
                     },
                     new PlayerSettings() {
+                        speed = 20,
                         color = Color.Green,
                         keyMapping = new Dictionary<Keys, Direction>() {
                             { Keys.W, Direction.UP },

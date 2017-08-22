@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 
@@ -12,5 +8,6 @@ namespace ColorWars
     {
         public Color color;
         public Dictionary<Keys, Direction> keyMapping;
+        public int speed;
     }
 }

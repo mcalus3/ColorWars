@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace ColorWars
 {
-    class EmptyPlayer : IPlayer
+    class MissingPlayer : IPlayer
     {
         public Color GetColor()
         {

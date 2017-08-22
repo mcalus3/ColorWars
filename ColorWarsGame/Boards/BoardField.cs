@@ -48,12 +48,12 @@ namespace ColorWars
 
         private Color ConvertOwnerColor(Color color)
         {
-            color = new Color(color.R, color.G, color.B);
-            color.R = (byte)Math.Floor(color.R * 0.5);
-            color.G = (byte)Math.Floor(color.G * 0.5);
-            color.B = (byte)Math.Floor(color.B * 0.5);
-            color.A = 0;
-            return color;
+            var newColor = new Color(color.R, color.G, color.B);
+            newColor.R = (byte)Math.Floor(color.R * 0.5);
+            newColor.G = (byte)Math.Floor(color.G * 0.5);
+            newColor.B = (byte)Math.Floor(color.B * 0.5);
+            newColor.A = 0;
+            return newColor;
         }
     }
 }

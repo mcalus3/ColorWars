@@ -11,15 +11,21 @@ namespace ColorWars
     {
         private Color color;
         private BoardField position;
+        private readonly BoardField startField;
         private Direction direction;
         private Tail tail;
-        public static IPlayer EMPTY = new EmptyPlayer();
+        public static readonly IPlayer MISSING = new MissingPlayer();
+        private int movementAccumulator;
+        private int speed; // interval between moves in frames
 
-        public Player(Color color, BoardField field)
+        public Player(Color color, BoardField startField, int speed)
         {
             this.color = color;
-            this.position = field;
+            this.position = startField;
+            this.startField = startField;
             this.direction = Direction.UP;
+            this.speed = speed;
+            this.movementAccumulator = -2 * speed;
         }
 
         public void ChangeDirection(Direction newDirection)
@@ -29,12 +35,25 @@ namespace ColorWars
 
         public void Move()
         {
-            this.position = this.position.GetNeighbor(this.direction);
+            this.movementAccumulator++;
+            if (this.movementAccumulator == this.speed)
+            {
+                if (this.position.GetNeighbor(this.direction) == null)
+                {
+                    this.Kill();
+                }
+                else
+                {
+                    this.movementAccumulator = 0;
+                    this.position = this.position.GetNeighbor(this.direction);
+                }
+            }
         }
 
         public void Kill()
         {
-            throw new NotImplementedException();
+            this.movementAccumulator = this.speed * -30; // penalty for death - respawn after 30 moves. To be moved to config.
+            this.position = this.startField;
         }
 
         public Color GetColor()
