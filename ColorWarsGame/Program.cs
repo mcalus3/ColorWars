@@ -18,8 +18,9 @@ namespace ColorWars
         {
             var settings = new ColorWarsSettings() {
                 startingTerritorySize = 2,
+                gameTime = 10,
                 dimension = new Point(30,30),
-                windowSize = new Point(600, 600),
+                windowSize = new Point(800, 600),
                 playerSettings = new PlayerSettings[] {
                     new PlayerSettings() {
                         speed = 10,

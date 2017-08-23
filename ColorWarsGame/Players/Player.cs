@@ -16,16 +16,6 @@ namespace ColorWars
         public Tail tail;
         public static readonly IPlayer MISSING = new MissingPlayer();
         private int movementAccumulator;
-
-        internal void AddTerritory()
-        {
-            foreach(BoardField field in this.tail.positions)
-            {
-                field.owner = this;
-            }
-            tail.Delete();
-        }
-
         private int speed; // interval between moves in frames
         internal IPlayerState state;
 
@@ -72,7 +62,16 @@ namespace ColorWars
             this.tail.Delete();
         }
 
-        internal void SpawnTail()
+        internal void AddTerritory()
+        {
+            foreach (BoardField field in this.tail.positions)
+            {
+                field.owner = this;
+            }
+            tail.Delete();
+        }
+
+    internal void SpawnTail()
         {
             this.tail.AddField(this.position);
         }

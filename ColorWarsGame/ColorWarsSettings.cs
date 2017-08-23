@@ -8,5 +8,6 @@ namespace ColorWars
         public Point windowSize;
         public PlayerSettings[] playerSettings;
         public int startingTerritorySize;
+        internal int gameTime;
     }
 }

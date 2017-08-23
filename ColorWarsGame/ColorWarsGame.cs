@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ColorWars
 {
@@ -13,20 +14,23 @@ namespace ColorWars
         private GameBoard gameBoard;
         private ColorWarsSettings settings;
         private KeyboardInputController inputController;
-        private int movementAccumulator = 0; //number of refreshes after which game tick runs
+        private bool paused = false;
+        private bool endGame = false;
 
         public ColorWarsGame(ColorWarsSettings settings)
         {
             this.settings = settings;
-            this.playerList = new List<Player>();
-            this.gameBoard = new GameBoard(this.settings.startingTerritorySize, this.settings.dimension);
-            this.graphics = new GameRenderer(new GraphicsDeviceManager(this), this.settings.dimension, this.settings.windowSize);
-            this.inputController = new KeyboardInputController();
-            Content.RootDirectory = "Content";
+            this.graphics = new GameRenderer(new GraphicsDeviceManager(this), this.settings.dimension, this.settings.windowSize, Content);
+
+
         }
 
         protected override void Initialize()
         {
+            this.playerList = new List<Player>();
+            this.gameBoard = new GameBoard(this.settings.startingTerritorySize, this.settings.dimension);
+            this.inputController = new KeyboardInputController();
+
             this.gameBoard.InitializeEmptyBoard();
             BoardField[] startFields = this.gameBoard.GetStartFields();
 
@@ -36,6 +40,7 @@ namespace ColorWars
                 this.playerList.Add(newPlayer);
                 this.inputController.AddInputCommand(new PlayerMoveCommand(settings.playerSettings[i].keyMapping, newPlayer));
             }
+
 
             this.gameBoard.ClaimStartingTerritories(this.playerList.ToArray());
 
@@ -58,29 +63,59 @@ namespace ColorWars
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            this.inputController.ExecuteCommands();
-
-            foreach (Player player in this.playerList)
+            if (!this.paused)
             {
-                player.Move();
+                this.inputController.ExecuteCommands();
+
+                foreach (Player player in this.playerList)
+                {
+                    player.Move();
+                }
             }
-            
+            if (this.EndGameCondition(gameTime))
+            {
+                EndGame();
+            }
+
             base.Update(gameTime);
+        }
+
+        private bool EndGameCondition(GameTime gameTime)
+        {
+            return (int)gameTime.TotalGameTime.TotalSeconds > this.settings.gameTime;
+        }
+        private void EndGame()
+        {
+            this.paused = true;
+
+            var keyboardState = Keyboard.GetState();
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            {
+                this.Exit();
+            }
         }
 
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            graphics.Draw();
+            graphics.DrawBoard();
+            graphics.DrawScoreboard(this.gameBoard.GetStatistics());
 
             base.Draw(gameTime);
+            //if (this.EndGameCondition(gameTime))
+            //{
+            //    this.endGame = true;
+            //    List<BoardField> fields = new List<BoardField>(this.gameBoard.GetFields());
+            //    IPlayer[] winners = this.gameBoard.GetStatistics();
+            //    this.graphics.DrawEndGameMessage(winners);
+            //    this.EndDraw();
+            //}
+
         }
 
         protected override void UnloadContent()
         {
+            this.graphics.RemoveAllRenderers();
         }
     }
 }

@@ -42,9 +42,9 @@ namespace ColorWars
         //returns rectangle covering given game field
         private Rectangle GetRectangleFromField(Point field)
         {
-            int tileWidth = gdManager.GraphicsDevice.Viewport.Width / this.mapDimension.X;
+            int tileWidth = gdManager.GraphicsDevice.Viewport.Width*3/4 / this.mapDimension.X;
             int tileHeight = gdManager.GraphicsDevice.Viewport.Height / this.mapDimension.Y;
-            return new Rectangle(field.X * tileWidth, field.Y * tileHeight, tileWidth, tileHeight);
+            return new Rectangle(field.X * tileWidth + gdManager.GraphicsDevice.Viewport.Width/4, field.Y * tileHeight, tileWidth, tileHeight);
         }
     }
 }

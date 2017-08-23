@@ -74,6 +74,15 @@ namespace ColorWars
             }
         }
 
+        internal IPlayer[] GetStatistics()
+        {
+            return this.board.GroupBy(f => f.owner)
+                             .OrderByDescending(gp => gp.Count())
+                             .Select(g => g.Key)
+                             .Where(p => p.GetColor() != Color.White)
+                             .ToArray();
+        }
+
         private bool FieldCloserToPlayerThan(ISquareDrawable field, ISquareDrawable player, int distance)
         {
             Vector2 fieldVector = field.GetPoints()[0].ToVector2();
