@@ -1,6 +1,6 @@
 ﻿namespace ColorWars
 {
-    enum Direction
+    public enum Direction
     {
         UP,
         DOWN,

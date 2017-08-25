@@ -2,12 +2,12 @@
 
 namespace ColorWars
 {
-    class ColorWarsSettings
+    public class ColorWarsSettings
     {
-        public Point dimension;
+        public Point mapDimension;
         public Point windowSize;
         public PlayerSettings[] playerSettings;
         public int startingTerritorySize;
-        internal int gameTime;
+        public int gameTime;
     }
 }

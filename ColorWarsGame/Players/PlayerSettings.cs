@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace ColorWars
 {
-    class PlayerSettings
+    public class PlayerSettings
     {
         public Color color;
         public Dictionary<Keys, Direction> keyMapping;

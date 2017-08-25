@@ -15,12 +15,11 @@ namespace ColorWars
         private ColorWarsSettings settings;
         private KeyboardInputController inputController;
         private bool paused = false;
-        private bool endGame = false;
 
         public ColorWarsGame(ColorWarsSettings settings)
         {
             this.settings = settings;
-            this.graphics = new GameRenderer(new GraphicsDeviceManager(this), this.settings.dimension, this.settings.windowSize, Content);
+            this.graphics = new GameRenderer(new GraphicsDeviceManager(this), this.settings.mapDimension, this.settings.windowSize, Content);
 
 
         }
@@ -28,7 +27,7 @@ namespace ColorWars
         protected override void Initialize()
         {
             this.playerList = new List<Player>();
-            this.gameBoard = new GameBoard(this.settings.startingTerritorySize, this.settings.dimension);
+            this.gameBoard = new GameBoard(this.settings.startingTerritorySize, this.settings.mapDimension);
             this.inputController = new KeyboardInputController();
 
             this.gameBoard.InitializeEmptyBoard();

@@ -14,7 +14,6 @@ namespace ColorWars
         private List<SquareRenderer> renderers;
         public GraphicsDeviceManager graphics;
         private Point mapDimension;
-        private SpriteFont font;
 
         public GameRenderer(GraphicsDeviceManager gManager, Point mapDimension, Point windowSize, ContentManager Content)
         {

@@ -1,0 +1,44 @@
+{
+  "mapDimension": {
+    "X": 30,
+    "Y": 20
+  },
+  "windowSize": {
+    "X": 800,
+    "Y": 600
+  },
+  "playerSettings": [
+    {
+      "color": {
+        "B": 255,
+        "G": 0,
+        "R": 0,
+        "A": 255
+      },
+      "keyMapping": {
+        "Up": 0,
+        "Down": 1,
+        "Left": 2,
+        "Right": 3
+      },
+      "speed": 10
+    },
+    {
+      "color": {
+        "B": 0,
+        "G": 128,
+        "R": 0,
+        "A": 255
+      },
+      "keyMapping": {
+        "W": 0,
+        "S": 1,
+        "A": 2,
+        "D": 3
+      },
+      "speed": 10
+    }
+  ],
+  "startingTerritorySize": 2,
+  "gameTime": 100
+}
