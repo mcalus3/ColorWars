@@ -42,13 +42,14 @@ namespace ColorWars
         internal void DrawScoreboard(IPlayer[] playerList)
         {
             int i = 0;
+            int playersCount = playerList.Count();
             foreach (IPlayer player in playerList)
             {
                 var texture = new Texture2D(graphics.GraphicsDevice, 1, 1);
                 var color = player.GetColor();
                 color.A = 50;
                 texture.SetData(new[] { color });
-                var rectangle = new Rectangle(0, graphics.GraphicsDevice.Viewport.Height/4 * i, graphics.GraphicsDevice.Viewport.Width/4, graphics.GraphicsDevice.Viewport.Height/4);
+                var rectangle = new Rectangle(0, graphics.GraphicsDevice.Viewport.Height/playersCount * i, graphics.GraphicsDevice.Viewport.Width/4, graphics.GraphicsDevice.Viewport.Height/ playersCount);
                 var spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
 
                 spriteBatch.Begin();
