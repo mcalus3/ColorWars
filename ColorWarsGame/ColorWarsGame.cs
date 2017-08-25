@@ -36,6 +36,7 @@ namespace ColorWars
             for (var i = 0; i < settings.playerSettings.Length; i++)
             {
                 var newPlayer = new Player(settings.playerSettings[i].color, startFields[i], this.settings.playerSettings[i].speed);
+                newPlayer.setGameBoard(this.gameBoard);
                 this.playerList.Add(newPlayer);
                 this.inputController.AddInputCommand(new PlayerMoveCommand(settings.playerSettings[i].keyMapping, newPlayer));
             }

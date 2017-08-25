@@ -11,7 +11,7 @@ namespace ColorWars
     {
         private Point position;
         public IPlayer owner;
-        private Dictionary<Direction, BoardField> neighbors;
+        public Dictionary<Direction, BoardField> neighbors;
         public event EventHandler PlayerEntered;
 
         public BoardField(IPlayer player, Point point)

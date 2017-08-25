@@ -35,6 +35,17 @@ namespace ColorWars
             }
         }
 
+            //x=2 y=7
+            // 0,0  0,1  0,2   0,3 0,4 0,5 0,6    1,0 1,1 1,2 1,3 1,4 1,5 1,6 1,7
+            // 1,2 => 9     1*y + 2 
+
+
+        public BoardField getFieldAt(int x, int y)
+        {
+            int index = (this.dimension.Y * x) + y;
+            return this.board.ElementAt(index);
+        }
+
         private void FillNeighbors(BoardField field)
         {
             BoardField leftNeighbor = this.board.SingleOrDefault(f => f.GetPoints()[0].X == field.GetPoints()[0].X - 1 && f.GetPoints()[0].Y == field.GetPoints()[0].Y);
