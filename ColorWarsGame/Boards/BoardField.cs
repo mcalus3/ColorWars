@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 using ColorWars.Players;
+using ColorWars.Graphics;
 
 namespace ColorWars.Boards
 {
-    class BoardField
+    class BoardField : ISquareDrawable
     {
         public Point Position { get; set; }
         public IPlayer Owner {get; set;}
