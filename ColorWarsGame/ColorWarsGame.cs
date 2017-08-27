@@ -8,6 +8,7 @@ using System.Linq;
 using ColorWars.Players;
 using ColorWars.Boards;
 using ColorWars.Graphics;
+using ColorWars.Controllers;
 
 namespace ColorWars
 {
@@ -17,6 +18,8 @@ namespace ColorWars
         private List<Player> playerList;
         private GameBoard gameBoard;
         private GameRenderer gameRenderer;
+        private KeyboardInputController gameController;
+
 
         public ColorWarsGame(ColorWarsSettings settings)
         {
@@ -24,7 +27,7 @@ namespace ColorWars
             this.playerList = new List<Player>();
             this.gameBoard = new GameBoard(this.settings.startingTerritorySize, this.settings.mapDimension);
             this.gameRenderer = new GameRenderer(new GraphicsDeviceManager(this), this.settings.mapDimension, this.settings.windowSize);
-
+            this.gameController = new KeyboardInputController();
         }
 
         protected override void Initialize()
@@ -34,10 +37,10 @@ namespace ColorWars
 
             for (var i = 0; i < this.settings.players.Count(); i++)
             {
-                var newPlayer = new Player(this.settings.players[i].color, startFields[i]);
+                var newPlayer = new Player(this.settings.players[i], startFields[i]);
                 this.playerList.Add(newPlayer);
+                this.gameController.Commands.Add(new PlayerMoveCommand(settings.players[i].keyMapping, this.playerList[i]));
             }
-
 
             base.Initialize();
         }
@@ -57,6 +60,13 @@ namespace ColorWars
 
         protected override void Update(GameTime gameTime)
         {
+            this.gameController.ExecuteCommands();
+
+            foreach (Player player in this.playerList)
+            {
+                player.Move();
+            }
+
             base.Update(gameTime);
         }
 
