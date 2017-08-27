@@ -14,15 +14,13 @@ namespace ColorWars
     {
         private List<Player> playerList;
         private GameBoard gameBoard;
+        private ColorWarsSettings settings;
 
-        private Point mapDimension = new Point(10,10); //To be moved to settings
-        private Color[] players = {Color.Blue, Color.Green}; //To be moved to settings
-        private int startingTerritorySize = 2; //To be moved to settings
-
-        public ColorWarsGame()
+        public ColorWarsGame(ColorWarsSettings settings)
         {
+            this.settings = settings;
             this.playerList = new List<Player>();
-            this.gameBoard = new GameBoard(this.startingTerritorySize, this.mapDimension);
+            this.gameBoard = new GameBoard(this.settings.startingTerritorySize, this.settings.mapDimension);
         }
 
         protected override void Initialize()
@@ -30,9 +28,9 @@ namespace ColorWars
             this.gameBoard.InitializeEmptyBoard();
             BoardField[] startFields = this.gameBoard.GetStartFields();
 
-            for (var i = 0; i < this.players.Count(); i++)
+            for (var i = 0; i < this.settings.players.Count(); i++)
             {
-                var newPlayer = new Player(this.players[i], startFields[i]);
+                var newPlayer = new Player(this.settings.players[i].color, startFields[i]);
                 this.playerList.Add(newPlayer);
             }
 

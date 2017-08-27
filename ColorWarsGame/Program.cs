@@ -19,7 +19,20 @@ namespace ColorWars
         [STAThread]
         static void Main()
         {
-            using (var game = new ColorWarsGame())
+            ColorWarsSettings settings;
+            try
+            {
+                settings = Newtonsoft.Json.JsonConvert.DeserializeObject<ColorWarsSettings>(File.ReadAllText("settings.json"));
+            }
+            catch (FileNotFoundException)
+            {
+                settings = new ColorWarsSettings();
+
+                string json = Newtonsoft.Json.JsonConvert.SerializeObject(settings, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText("settings.json", json);
+            }
+
+            using (var game = new ColorWarsGame(settings))
                 game.Run();
         }
     }
