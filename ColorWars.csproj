@@ -74,6 +74,7 @@
     <Compile Include="ColorWarsGame\Players\MissingPlayer.cs" />
     <Compile Include="ColorWarsGame\Players\Player.cs" />
     <Compile Include="ColorWarsGame\Players\PlayerSettings.cs" />
+    <Compile Include="ColorWarsGame\Players\Tail.cs" />
     <Compile Include="ColorWarsGame\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

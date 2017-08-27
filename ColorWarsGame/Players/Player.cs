@@ -15,6 +15,7 @@ namespace ColorWars.Players
 
         private readonly BoardField startField;
         private PlayerSettings settings;
+        public Tail Tail{get; set;}
 
         private BoardField position;
         public Direction Direction { get; set; }
@@ -26,6 +27,7 @@ namespace ColorWars.Players
             this.position = startField;
             this.startField = startField;
             this.Direction = Direction.NONE;
+            this.Tail = new Tail(this);
         }
 
         public Color GetColor()
@@ -48,24 +50,29 @@ namespace ColorWars.Players
             if (this.moveTimer != this.settings.speed)
             {
                 this.moveTimer++;
-                return;
             }
-
-            if (this.Direction == Direction.NONE)
+            else if (this.Direction == Direction.NONE)
             {
                 this.moveTimer = 0;
-                return;
             }
-
-            if (this.position.Neighbours[this.Direction] == null)
+            else if (this.position.Neighbours[this.Direction] == null)
             {
-                this.position = this.startField;
-                this.moveTimer = -1 * this.settings.deathPenalty;
+                this.Tail.Delete();
+                this.Kill(this);
                 return;
             }
+            else
+            {
+                this.Tail.Positions.Add(this.position);
+                this.position = this.position.Neighbours[this.Direction];
+                this.moveTimer = 0;
+            }
+        }
 
-            this.position = this.position.Neighbours[this.Direction];
-            this.moveTimer = 0;
+        private void Kill(Player owner)
+        {
+            this.position = this.startField;
+            this.moveTimer = -1 * this.settings.deathPenalty;
         }
     }
 }
