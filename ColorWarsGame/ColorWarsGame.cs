@@ -42,6 +42,8 @@ namespace ColorWars
                 this.gameController.Commands.Add(new PlayerMoveCommand(settings.players[i].keyMapping, this.playerList[i]));
             }
 
+            this.gameBoard.ClaimStartingTerritories(this.playerList.ToArray());
+
             base.Initialize();
         }
 

@@ -14,7 +14,7 @@ namespace ColorWars
     class ColorWarsSettings
     {
         public Point windowSize = new Point(800, 600);
-        public Point mapDimension = new Point(10, 10);
+        public Point mapDimension = new Point(20, 20);
         public int startingTerritorySize = 2;
         public PlayerSettings[] players = new PlayerSettings[] {
             new PlayerSettings() {

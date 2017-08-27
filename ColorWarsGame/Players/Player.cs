@@ -15,18 +15,20 @@ namespace ColorWars.Players
 
         private readonly BoardField startField;
         private PlayerSettings settings;
-        public Tail Tail{get; set;}
+        public Tail Tail { get; set; }
 
-        private BoardField position;
+        public BoardField Position { get; set; }
         public Direction Direction { get; set; }
         private int moveTimer;
+        public IPlayerState State { get; set; }
 
         public Player(PlayerSettings settings, BoardField startField)
         {
             this.settings = settings;
-            this.position = startField;
+            this.Position = startField;
             this.startField = startField;
             this.Direction = Direction.NONE;
+            this.State = new DefensiveState(this);
             this.Tail = new Tail(this);
         }
 
@@ -37,7 +39,7 @@ namespace ColorWars.Players
 
         public Point[] GetPoints()
         {
-            return new Point[] { this.position.GetPoints()[0] };
+            return new Point[] { this.Position.GetPoints()[0] };
         }
 
         public void ChangeDirection(Direction direction)
@@ -55,7 +57,7 @@ namespace ColorWars.Players
             {
                 this.moveTimer = 0;
             }
-            else if (this.position.Neighbours[this.Direction] == null)
+            else if (this.Position.Neighbours[this.Direction] == null)
             {
                 this.Tail.Delete();
                 this.Kill(this);
@@ -63,16 +65,30 @@ namespace ColorWars.Players
             }
             else
             {
-                this.Tail.Positions.Add(this.position);
-                this.position = this.position.Neighbours[this.Direction];
+                this.State.OnMovement();
+                this.Position = this.Position.Neighbours[this.Direction];
                 this.moveTimer = 0;
             }
         }
 
+        internal void SpawnTail()
+        {
+            this.Tail.Positions.Add(this.Position);
+        }
+
         private void Kill(Player owner)
         {
-            this.position = this.startField;
+            this.Position = this.startField;
             this.moveTimer = -1 * this.settings.deathPenalty;
+        }
+
+        public void AddTerritory()
+        {
+            foreach (BoardField field in this.Tail.Positions)
+            {
+                field.Owner = this;
+            }
+            this.Tail.Delete();
         }
     }
 }
