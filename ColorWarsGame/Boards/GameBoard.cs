@@ -90,5 +90,15 @@ namespace ColorWars.Boards
                 return false;
             }
         }
+
+        public IPlayer[] GetStatistics()
+        {
+            return this.Board.GroupBy(f => f.Owner)
+                             .OrderByDescending(gp => gp.Count())
+                             .Select(g => g.Key)
+                             .Where(p => p.GetColor() != Color.White)
+                             .ToArray();
+        }
+
     }
 }

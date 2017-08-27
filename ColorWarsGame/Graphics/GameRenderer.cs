@@ -37,6 +37,34 @@ namespace ColorWars.Graphics
             }
         }
 
+        internal void DrawScoreboard(IPlayer[] playerList)
+        {
+            int playerNumber = 0;
+            GraphicsDevice g = this.Graphics.GraphicsDevice;
+            int playersCount = playerList.Count();
+
+            int scoreWidth = g.Viewport.Width / 4;
+            int scoreHeight = g.Viewport.Height / playersCount;
+
+            foreach (IPlayer player in playerList)
+            {
+                var color = player.GetColor();
+                color.A = 50;
+                var texture = new Texture2D(g, 1, 1);
+                texture.SetData(new[] { color });
+                var spriteBatch = new SpriteBatch(g);
+
+                int scorePos = g.Viewport.Height / playersCount * playerNumber;
+                var rectangle = new Rectangle(0, scorePos, scoreWidth, scoreHeight);
+
+                spriteBatch.Begin();
+                spriteBatch.Draw(texture, rectangle, color);
+                spriteBatch.End();
+
+                playerNumber++;
+            }
+        }
+
         public void AddRenderer(ISquareDrawable drawable)
         {
             this.Renderers.Add(new SquareRenderer(this.Graphics, drawable, this.mapDimension));

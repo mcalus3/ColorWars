@@ -63,6 +63,8 @@ namespace ColorWars
         protected override void Draw(GameTime gameTime)
         {
             this.gameRenderer.DrawBoard();
+            this.gameRenderer.DrawScoreboard(this.gameBoard.GetStatistics());
+
             base.Draw(gameTime);
         }
 
