@@ -16,6 +16,7 @@ namespace ColorWars
         public Point windowSize = new Point(800, 600);
         public Point mapDimension = new Point(20, 20);
         public int startingTerritorySize = 2;
+        public int endTime = 100;
         public PlayerSettings[] players = new PlayerSettings[] {
             new PlayerSettings() {
                 color = Color.Green,

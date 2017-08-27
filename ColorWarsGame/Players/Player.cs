@@ -59,7 +59,6 @@ namespace ColorWars.Players
             }
             else if (this.Position.Neighbours[this.Direction] == null)
             {
-                this.Tail.Delete();
                 this.Kill(this);
                 return;
             }
@@ -67,17 +66,19 @@ namespace ColorWars.Players
             {
                 this.State.OnMovement();
                 this.Position = this.Position.Neighbours[this.Direction];
+                this.Position.OnPlayerEntered(this);
                 this.moveTimer = 0;
             }
         }
 
         internal void SpawnTail()
         {
-            this.Tail.Positions.Add(this.Position);
+            this.Tail.AddField(this.Position);
         }
 
-        private void Kill(Player owner)
+        public void Kill(Player owner)
         {
+            this.Tail.Delete();
             this.Position = this.startField;
             this.moveTimer = -1 * this.settings.deathPenalty;
         }

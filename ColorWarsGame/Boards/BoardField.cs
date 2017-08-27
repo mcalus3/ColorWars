@@ -15,12 +15,20 @@ namespace ColorWars.Boards
         public Point Position { get; set; }
         public IPlayer Owner {get; set;}
         public Dictionary<Direction, BoardField> Neighbours{get; set;}
+        public event EventHandler PlayerEntered;
 
         public BoardField(IPlayer player, Point point)
         {
             this.Owner = player;
             this.Position = point;
             this.Neighbours = new Dictionary<Direction, BoardField>();
+
+        }
+
+        internal void OnPlayerEntered(Player player)
+        {
+            if (this.PlayerEntered != null)
+                this.PlayerEntered(player, new EventArgs());
         }
 
         public Point[] GetPoints()

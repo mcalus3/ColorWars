@@ -22,9 +22,24 @@ namespace ColorWars.Players
             this.Positions = new List<BoardField>();
         }
 
+        public void AddField(BoardField field)
+        {
+            this.Positions.Add(field);
+            field.PlayerEntered += this.PlayerEnteredHandler;
+        }
+
+        private void PlayerEnteredHandler(object sender, EventArgs e)
+        {
+            owner.Kill((Player)sender);
+        }
+
         public void Delete()
         {
-            this.Positions = new List<BoardField>();
+            foreach (BoardField position in this.Positions)
+            {
+                position.PlayerEntered -= this.PlayerEnteredHandler;
+            }
+            this.Positions.Clear();
         }
 
         public Color GetColor()

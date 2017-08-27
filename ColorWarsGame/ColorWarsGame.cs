@@ -20,7 +20,6 @@ namespace ColorWars
         private GameRenderer gameRenderer;
         private KeyboardInputController gameController;
 
-
         public ColorWarsGame(ColorWarsSettings settings)
         {
             this.settings = settings;
@@ -63,8 +62,21 @@ namespace ColorWars
 
         protected override void Update(GameTime gameTime)
         {
+            //Check for endGame
+            if ((int)gameTime.TotalGameTime.TotalSeconds >= this.settings.endTime)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    this.Exit();
+                }
+
+                return;
+            }
+
+            //Read and evaluate input
             this.gameController.ExecuteCommands();
 
+            //Move players
             foreach (Player player in this.playerList)
             {
                 player.Move();
