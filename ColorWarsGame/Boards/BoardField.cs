@@ -43,12 +43,7 @@ namespace ColorWars.Boards
 
         private Color ConvertOwnerColor(Color color)
         {
-            var newColor = new Color(color.R, color.G, color.B);
-            newColor.R = (byte)Math.Floor(color.R * 0.5);
-            newColor.G = (byte)Math.Floor(color.G * 0.5);
-            newColor.B = (byte)Math.Floor(color.B * 0.5);
-            newColor.A = 0;
-            return newColor;
+            return ColorTools.TwiceLighter(color);
         }
     }
 }

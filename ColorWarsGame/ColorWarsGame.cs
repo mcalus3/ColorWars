@@ -25,12 +25,14 @@ namespace ColorWars
             this.settings = settings;
             this.playerList = new List<Player>();
             this.gameBoard = new GameBoard(this.settings.startingTerritorySize, this.settings.mapDimension);
-            this.gameRenderer = new GameRenderer(new GraphicsDeviceManager(this), this.settings.mapDimension, this.settings.windowSize);
+            this.gameRenderer = new GameRenderer(new GraphicsDeviceManager(this), this.settings);
             this.gameController = new KeyboardInputController();
         }
 
         protected override void Initialize()
         {
+            this.gameRenderer.Initialize();
+
             this.gameBoard.InitializeEmptyBoard();
             BoardField[] startFields = this.gameBoard.GetStartFields();
 
@@ -41,23 +43,16 @@ namespace ColorWars
                 this.gameController.Commands.Add(new PlayerMoveCommand(settings.players[i].keyMapping, this.playerList[i]));
             }
 
-            this.gameBoard.ClaimStartingTerritories(this.playerList.ToArray());
-
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            foreach (BoardField field in this.gameBoard.Board)
-            {
-                this.gameRenderer.AddRenderer(field);
-            }
-            foreach (Player player in this.playerList)
-            {
-                this.gameRenderer.AddRenderer(player);
-                this.gameRenderer.AddRenderer(player.Tail);
-            }
+            this.gameRenderer.CreateFieldRenderers(this.gameBoard.Board.ToArray());
+            this.gameRenderer.CreatePlayerRenderers(this.playerList.ToArray());
+            this.gameRenderer.CreateFieldRenderers(this.playerList.Select(p => p.Tail).ToArray());
 
+            this.gameBoard.ClaimStartingTerritories(this.playerList.ToArray());
         }
 
         protected override void Update(GameTime gameTime)
@@ -88,7 +83,6 @@ namespace ColorWars
         protected override void Draw(GameTime gameTime)
         {
             this.gameRenderer.DrawBoard();
-            this.gameRenderer.DrawScoreboard(this.gameBoard.GetStatistics());
 
             base.Draw(gameTime);
         }

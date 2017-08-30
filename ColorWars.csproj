@@ -67,9 +67,13 @@
     <Compile Include="ColorWarsGame\ColorWarsSettings.cs" />
     <Compile Include="ColorWarsGame\Controllers\KeyboardInputController.cs" />
     <Compile Include="ColorWarsGame\Controllers\PlayerMoveCommand.cs" />
+    <Compile Include="ColorWarsGame\Graphics\ColorTools.cs" />
+    <Compile Include="ColorWarsGame\Graphics\FieldRenderer.cs" />
+    <Compile Include="ColorWarsGame\Graphics\GameElementRenderer.cs" />
     <Compile Include="ColorWarsGame\Graphics\GameRenderer.cs" />
+    <Compile Include="ColorWarsGame\Graphics\IDrawable.cs" />
     <Compile Include="ColorWarsGame\Graphics\ISquareDrawable.cs" />
-    <Compile Include="ColorWarsGame\Graphics\SquareRenderer.cs" />
+    <Compile Include="ColorWarsGame\Graphics\PlayerRenderer.cs" />
     <Compile Include="ColorWarsGame\Players\AttackingState.cs" />
     <Compile Include="ColorWarsGame\Players\DefensiveState.cs" />
     <Compile Include="ColorWarsGame\Players\IPlayer.cs" />

@@ -8,66 +8,58 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ColorWars.Players;
+using ColorWars.Boards;
 
 namespace ColorWars.Graphics
 {
     class GameRenderer
     {
-        public List<SquareRenderer> Renderers {get; set;}
+        public List<IDrawable> Renderers {get; set;}
         public GraphicsDeviceManager Graphics{get; set;}
         private Point mapDimension;
+        private SpriteBatch sBatch;
 
-        public GameRenderer(GraphicsDeviceManager gManager, Point mapDimension, Point windowSize)
+        public GameRenderer(GraphicsDeviceManager gManager, ColorWarsSettings settings)
         {
             this.Graphics = gManager;
-            this.Graphics.PreferredBackBufferWidth = windowSize.X;
-            this.Graphics.PreferredBackBufferHeight = windowSize.Y;
-            this.mapDimension = mapDimension;
-            this.Renderers = new List<SquareRenderer>();
+            this.Graphics.PreferredBackBufferWidth = settings.windowSize.X;
+            this.Graphics.PreferredBackBufferHeight = settings.windowSize.Y;
+            this.mapDimension = settings.mapDimension;
+
+            this.Renderers = new List<IDrawable>();
+        }
+
+        public void Initialize()
+        {
+            this.sBatch = new SpriteBatch(this.Graphics.GraphicsDevice);
         }
 
         public void DrawBoard()
         {
-            this.Graphics.GraphicsDevice.SetRenderTarget(null);
-            this.Graphics.GraphicsDevice.Clear(Color.Black);
+            this.sBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
 
-            foreach (SquareRenderer renderer in this.Renderers)
+            foreach (IDrawable renderer in this.Renderers)
             {
                 renderer.Draw();
             }
+
+            this.sBatch.End();
         }
 
-        internal void DrawScoreboard(IPlayer[] playerList)
+        public void CreateFieldRenderers(ISquareDrawable[] drawables)
         {
-            int playerNumber = 0;
-            GraphicsDevice g = this.Graphics.GraphicsDevice;
-            int playersCount = playerList.Count();
-
-            int scoreWidth = g.Viewport.Width / 4;
-            int scoreHeight = g.Viewport.Height / playersCount;
-
-            foreach (IPlayer player in playerList)
+            foreach (ISquareDrawable drawable in drawables)
             {
-                var color = player.GetColor();
-                color.A = 50;
-                var texture = new Texture2D(g, 1, 1);
-                texture.SetData(new[] { color });
-                var spriteBatch = new SpriteBatch(g);
-
-                int scorePos = g.Viewport.Height / playersCount * playerNumber;
-                var rectangle = new Rectangle(0, scorePos, scoreWidth, scoreHeight);
-
-                spriteBatch.Begin();
-                spriteBatch.Draw(texture, rectangle, color);
-                spriteBatch.End();
-
-                playerNumber++;
+                this.Renderers.Add(new FieldRenderer(this.Graphics, drawable, this.mapDimension, this.sBatch));
             }
         }
 
-        public void AddRenderer(ISquareDrawable drawable)
+        public void CreatePlayerRenderers(Player[] drawables)
         {
-            this.Renderers.Add(new SquareRenderer(this.Graphics, drawable, this.mapDimension));
+            foreach (Player drawable in drawables)
+            {
+                this.Renderers.Add(new PlayerRenderer(this.Graphics, drawable, this.mapDimension, this.sBatch));
+            }
         }
     }
 }

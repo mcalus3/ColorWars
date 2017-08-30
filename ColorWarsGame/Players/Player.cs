@@ -14,27 +14,29 @@ namespace ColorWars.Players
         public static readonly IPlayer MISSING = new MissingPlayer();
 
         private readonly BoardField startField;
-        private PlayerSettings settings;
+        public PlayerSettings Settings { get; set; }
         public Tail Tail { get; set; }
 
         public BoardField Position { get; set; }
         public Direction Direction { get; set; }
-        private int moveTimer;
+        public int MoveTimer { get; set; }
         public IPlayerState State { get; set; }
+        public Direction BufferedDirection { get; set; }
 
         public Player(PlayerSettings settings, BoardField startField)
         {
-            this.settings = settings;
+            this.Settings = settings;
             this.Position = startField;
             this.startField = startField;
             this.Direction = Direction.NONE;
+            this.BufferedDirection = Direction.NONE;
             this.State = new DefensiveState(this);
             this.Tail = new Tail(this);
         }
 
         public Color GetColor()
         {
-            return this.settings.color;
+            return this.Settings.color;
         }
 
         public Point[] GetPoints()
@@ -49,25 +51,30 @@ namespace ColorWars.Players
 
         public void Move()
         {
-            if (this.moveTimer != this.settings.speed)
+            if (this.MoveTimer != this.Settings.speed)
             {
-                this.moveTimer++;
+                this.MoveTimer++;
             }
             else if (this.Direction == Direction.NONE)
             {
-                this.moveTimer = 0;
+                this.MoveTimer = 0;
             }
-            else if (this.Position.Neighbours[this.Direction] == null)
+            else if (this.BufferedDirection == Direction.NONE)
+            {
+                this.BufferedDirection = this.Direction;
+            }
+            else if (this.Position.Neighbours[this.BufferedDirection] == null)
             {
                 this.Kill(this);
                 return;
             }
             else
             {
+                this.MoveTimer = 0;
                 this.State.OnMovement();
-                this.Position = this.Position.Neighbours[this.Direction];
+                this.Position = this.Position.Neighbours[this.BufferedDirection];
                 this.Position.OnPlayerEntered(this);
-                this.moveTimer = 0;
+                this.BufferedDirection = this.Direction;
             }
         }
 
@@ -80,7 +87,7 @@ namespace ColorWars.Players
         {
             this.Tail.Delete();
             this.Position = this.startField;
-            this.moveTimer = -1 * this.settings.deathPenalty;
+            this.MoveTimer = -1 * this.Settings.deathPenalty;
         }
 
         public void AddTerritory()
