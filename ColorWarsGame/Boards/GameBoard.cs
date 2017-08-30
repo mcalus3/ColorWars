@@ -100,5 +100,13 @@ namespace ColorWars.Boards
                              .ToArray();
         }
 
+
+        public void UpdatePlayersTerritory(Player[] players)
+        {
+            foreach (Player player in players)
+            {
+                player.Stats.Territory = this.Board.Cast<BoardField>().Where(f => f.Owner == player).Count();
+            }
+        }
     }
 }

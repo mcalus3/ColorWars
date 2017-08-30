@@ -16,12 +16,15 @@ namespace ColorWars.Players
         private readonly BoardField startField;
         public PlayerSettings Settings { get; set; }
         public Tail Tail { get; set; }
+        public PlayerStats Stats { get; set; }
 
         public BoardField Position { get; set; }
         public Direction Direction { get; set; }
         public int MoveTimer { get; set; }
         public IPlayerState State { get; set; }
         public Direction BufferedDirection { get; set; }
+
+        public event EventHandler TerritoryAddedEvent;
 
         public Player(PlayerSettings settings, BoardField startField)
         {
@@ -32,6 +35,7 @@ namespace ColorWars.Players
             this.BufferedDirection = Direction.NONE;
             this.State = new DefensiveState(this);
             this.Tail = new Tail(this);
+            this.Stats = new PlayerStats();
         }
 
         public Color GetColor()
@@ -97,6 +101,13 @@ namespace ColorWars.Players
                 field.Owner = this;
             }
             this.Tail.Delete();
+            this.OnTerritoryAdded(this);
+        }
+
+        internal void OnTerritoryAdded(Player player)
+        {
+            if (this.TerritoryAddedEvent != null)
+                this.TerritoryAddedEvent(player, new EventArgs());
         }
     }
 }

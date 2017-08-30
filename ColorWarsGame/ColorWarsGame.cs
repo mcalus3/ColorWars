@@ -19,6 +19,7 @@ namespace ColorWars
         private GameBoard gameBoard;
         private GameRenderer gameRenderer;
         private KeyboardInputController gameController;
+        private Scoreboard scoreboard;
 
         public ColorWarsGame(ColorWarsSettings settings)
         {
@@ -27,6 +28,7 @@ namespace ColorWars
             this.gameBoard = new GameBoard(this.settings.startingTerritorySize, this.settings.mapDimension);
             this.gameRenderer = new GameRenderer(new GraphicsDeviceManager(this), this.settings);
             this.gameController = new KeyboardInputController();
+            this.scoreboard = new Scoreboard(this.playerList, this.gameBoard);
         }
 
         protected override void Initialize()
@@ -34,6 +36,14 @@ namespace ColorWars
             this.gameRenderer.Initialize();
 
             this.gameBoard.InitializeEmptyBoard();
+
+            this.AddPlayers();
+
+            base.Initialize();
+        }
+
+        private void AddPlayers()
+        {
             BoardField[] startFields = this.gameBoard.GetStartFields();
 
             for (var i = 0; i < this.settings.players.Count(); i++)
@@ -41,16 +51,16 @@ namespace ColorWars
                 var newPlayer = new Player(this.settings.players[i], startFields[i]);
                 this.playerList.Add(newPlayer);
                 this.gameController.Commands.Add(new PlayerMoveCommand(settings.players[i].keyMapping, this.playerList[i]));
+                newPlayer.TerritoryAddedEvent += this.scoreboard.Update;
             }
-
-            base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            this.gameRenderer.CreateFieldRenderers(this.gameBoard.Board.ToArray());
+            this.gameRenderer.CreateFieldRenderers(this.gameBoard.Board.Cast<ISquareDrawable>().ToArray());
             this.gameRenderer.CreatePlayerRenderers(this.playerList.ToArray());
-            this.gameRenderer.CreateFieldRenderers(this.playerList.Select(p => p.Tail).ToArray());
+            this.gameRenderer.CreateFieldRenderers(this.playerList.Select(p => p.Tail).Cast<ISquareDrawable>().ToArray());
+            this.gameRenderer.CreateScoreboardRenderers(this.scoreboard);
 
             this.gameBoard.ClaimStartingTerritories(this.playerList.ToArray());
         }
@@ -60,11 +70,11 @@ namespace ColorWars
             //Check for endGame
             if ((int)gameTime.TotalGameTime.TotalSeconds >= this.settings.endTime)
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                KeyboardState state = Keyboard.GetState();
+                if (state.IsKeyDown(Keys.Enter) || state.IsKeyDown(Keys.Escape))
                 {
                     this.Exit();
                 }
-
                 return;
             }
 
@@ -72,7 +82,7 @@ namespace ColorWars
             this.gameController.ExecuteCommands();
 
             //Move players
-            foreach (Player player in this.playerList)
+            foreach (Player player in this.playerList.ToArray())
             {
                 player.Move();
             }
@@ -83,8 +93,6 @@ namespace ColorWars
         protected override void Draw(GameTime gameTime)
         {
             this.gameRenderer.DrawBoard();
-
-            base.Draw(gameTime);
         }
 
         protected override void UnloadContent()
