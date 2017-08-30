@@ -44,23 +44,12 @@ namespace ColorWars.Players
 
         public Color GetColor()
         {
-            return this.ConvertOwnerColor(this.owner.GetColor());
+            return ColorTools.HalfTransparent(this.owner.GetColor());
         }
 
         public Point[] GetPoints()
         {
             return this.Positions.Select(f => f.GetPoints()[0]).ToArray();
         }
-
-        private Color ConvertOwnerColor(Color color)
-        {
-            var newColor = new Color(color.R, color.G, color.B);
-            newColor.R = color.R;
-            newColor.G = color.G;
-            newColor.B = color.B;
-            newColor.A = 200;
-            return newColor;
-        }
-
     }
 }

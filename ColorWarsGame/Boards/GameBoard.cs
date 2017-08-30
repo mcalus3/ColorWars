@@ -11,13 +11,13 @@ namespace ColorWars.Boards
 {
     class GameBoard
     {
-        public List<BoardField> Board {get; set;}
+        public BoardField[,] Board { get; set; }
         private int startingTerritorySize;
         private Point dimension;
 
         public GameBoard(int startingTerritorySize, Point dimension)
         {
-            this.Board = new List<BoardField>();
+            this.Board = new BoardField[dimension.X, dimension.Y];
             this.startingTerritorySize = startingTerritorySize;
             this.dimension = dimension;
         }
@@ -28,10 +28,11 @@ namespace ColorWars.Boards
             {
                 for (int j = 0; j < this.dimension.Y; j++)
                 {
-                    this.Board.Add(new BoardField(Player.MISSING, new Point(i, j)));
+                    this.Board[i, j] = new BoardField(Player.MISSING, new Point(i, j));
                 }
             }
-            foreach(BoardField field in this.Board)
+
+            foreach (BoardField field in this.Board)
             {
                 this.FillNeighbors(field);
             }
@@ -39,10 +40,21 @@ namespace ColorWars.Boards
 
         private void FillNeighbors(BoardField field)
         {
-            BoardField leftNeighbor = this.Board.SingleOrDefault(f => f.GetPoints()[0].X == field.GetPoints()[0].X - 1 && f.GetPoints()[0].Y == field.GetPoints()[0].Y);
-            BoardField rightNeighbor = this.Board.SingleOrDefault(f => f.GetPoints()[0].X == field.GetPoints()[0].X + 1 && f.GetPoints()[0].Y == field.GetPoints()[0].Y);
-            BoardField upperNeighbor = this.Board.SingleOrDefault(f => f.GetPoints()[0].Y == field.GetPoints()[0].Y - 1 && f.GetPoints()[0].X == field.GetPoints()[0].X);
-            BoardField lowerNeighbor = this.Board.SingleOrDefault(f => f.GetPoints()[0].Y == field.GetPoints()[0].Y + 1 && f.GetPoints()[0].X == field.GetPoints()[0].X);
+            Point cords = field.Position;
+            BoardField upperNeighbor = null;
+            BoardField lowerNeighbor = null;
+            BoardField leftNeighbor = null;
+            BoardField rightNeighbor = null;
+
+            if (cords.Y > 0)
+                upperNeighbor = this.Board[cords.X, cords.Y - 1];
+            if (cords.Y < this.dimension.Y - 1)
+                lowerNeighbor = this.Board[cords.X, cords.Y + 1];
+            if (cords.X > 0)
+                leftNeighbor = this.Board[cords.X - 1, cords.Y];
+            if (cords.X < this.dimension.X - 1)
+                rightNeighbor = this.Board[cords.X + 1, cords.Y];
+
             field.Neighbours[Direction.UP] = upperNeighbor;
             field.Neighbours[Direction.DOWN] = lowerNeighbor;
             field.Neighbours[Direction.LEFT] = leftNeighbor;
@@ -53,10 +65,15 @@ namespace ColorWars.Boards
         {
             var fields = new BoardField[]
             {
-                this.Board.Single(field => field.GetPoints()[0] == new Point((int)(this.dimension.X/4),(int)(this.dimension.Y/4))),
-                this.Board.Single(field => field.GetPoints()[0] == new Point((int)(this.dimension.X*3/4),(int)(this.dimension.Y*3/4))),
-                this.Board.Single(field => field.GetPoints()[0] == new Point((int)(this.dimension.X*3/4),(int)(this.dimension.Y/4))),
-                this.Board.Single(field => field.GetPoints()[0] == new Point((int)(this.dimension.X/4),(int)(this.dimension.Y*3/4))),
+                this.Board[(int)(this.dimension.X/4), (int)(this.dimension.Y/4)],
+                this.Board[(int)(this.dimension.X*3/4), (int)(this.dimension.Y*3/4)],
+                this.Board[(int)(this.dimension.X*3/4), (int)(this.dimension.Y/4)],
+                this.Board[(int)(this.dimension.X/4), (int)(this.dimension.Y*3/4)],
+
+                this.Board[(int)(this.dimension.X/2), (int)(this.dimension.Y*3/4)],
+                this.Board[(int)(this.dimension.X/2), (int)(this.dimension.Y/4)],
+                this.Board[(int)(this.dimension.X*3/4), (int)(this.dimension.Y/2)],
+                this.Board[(int)(this.dimension.X/4), (int)(this.dimension.Y/2)],
             };
             return fields;
         }
@@ -65,41 +82,29 @@ namespace ColorWars.Boards
         {
             foreach (Player player in players)
             {
-                foreach(BoardField field in this.Board)
-                {
-                    if (FieldCloserToPlayerThan(field, player, (int)(this.startingTerritorySize * Math.Sqrt(2))) )
-                    {
-                        field.Owner = player;
-                    }
-                }
+                int depth = this.startingTerritorySize;
+                this.RecursiveTerritoryClaiming(player, player.Position, depth);
             }
         }
 
-        private bool FieldCloserToPlayerThan(BoardField field, IPlayer player, int distance)
+        private void RecursiveTerritoryClaiming(Player player, BoardField field, int depth)
         {
-            Vector2 fieldVector = field.GetPoints()[0].ToVector2();
-            Vector2 playerVector = player.GetPoints()[0].ToVector2();
-            Vector2 diffVector = (fieldVector - playerVector);
 
-            if (diffVector.Length() <= distance)
+            if (field == null)
             {
-                return true;
+                return;
             }
-            else
+            field.Owner = player;
+            if (depth == 0)
             {
-                return false;
+                return;
+            }
+            depth--;
+            foreach (BoardField nextField in field.Neighbours.Values)
+            {
+                this.RecursiveTerritoryClaiming(player, nextField, depth);
             }
         }
-
-        public IPlayer[] GetStatistics()
-        {
-            return this.Board.GroupBy(f => f.Owner)
-                             .OrderByDescending(gp => gp.Count())
-                             .Select(g => g.Key)
-                             .Where(p => p.GetColor() != Color.White)
-                             .ToArray();
-        }
-
 
         public void UpdatePlayersTerritory(Player[] players)
         {

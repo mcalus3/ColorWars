@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 using ColorWars.Boards;
+using ColorWars.Players.States;
+using ColorWars.Graphics;
 
 namespace ColorWars.Players
 {
-    class Player : IPlayer
+    class Player : IPlayer, ISquareDrawable
     {
         public static readonly IPlayer MISSING = new MissingPlayer();
 
@@ -22,9 +24,10 @@ namespace ColorWars.Players
         public Direction Direction { get; set; }
         public int MoveTimer { get; set; }
         public IPlayerState State { get; set; }
-        public Direction BufferedDirection { get; set; }
-
         public event EventHandler TerritoryAddedEvent;
+        public Direction BufferedDirection { get; set; }
+        public int RestoreTimer { get; set; }
+        private bool Removed;
 
         public Player(PlayerSettings settings, BoardField startField)
         {
@@ -55,7 +58,15 @@ namespace ColorWars.Players
 
         public void Move()
         {
-            if (this.MoveTimer != this.Settings.speed)
+            if (this.Removed)
+            {
+                return;
+            }
+            else if (RestoreTimer != 0)
+            {
+                RestoreTimer--;
+            }
+            else if (this.MoveTimer != this.Settings.speed)
             {
                 this.MoveTimer++;
             }
@@ -78,20 +89,33 @@ namespace ColorWars.Players
                 this.State.OnMovement();
                 this.Position = this.Position.Neighbours[this.BufferedDirection];
                 this.Position.OnPlayerEntered(this);
-                this.BufferedDirection = this.Direction;
+                if (this.Direction != Player.ReversedDirection(this.BufferedDirection))
+                {
+                    this.BufferedDirection = this.Direction;
+                }
+            }
+        }
+
+        private static Boards.Direction ReversedDirection(Boards.Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.UP:
+                    return Direction.DOWN;
+                case Direction.DOWN:
+                    return Direction.UP;
+                case Direction.LEFT:
+                    return Direction.RIGHT;
+                case Direction.RIGHT:
+                    return Direction.LEFT;
+                default:
+                    return Direction.NONE;
             }
         }
 
         internal void SpawnTail()
         {
             this.Tail.AddField(this.Position);
-        }
-
-        public void Kill(Player owner)
-        {
-            this.Tail.Delete();
-            this.Position = this.startField;
-            this.MoveTimer = -1 * this.Settings.deathPenalty;
         }
 
         public void AddTerritory()
@@ -101,6 +125,7 @@ namespace ColorWars.Players
                 field.Owner = this;
             }
             this.Tail.Delete();
+
             this.OnTerritoryAdded(this);
         }
 
@@ -108,6 +133,23 @@ namespace ColorWars.Players
         {
             if (this.TerritoryAddedEvent != null)
                 this.TerritoryAddedEvent(player, new EventArgs());
+        }
+
+        public void Kill(Player killer)
+        {
+            this.Stats.Deaths += 1;
+            killer.Stats.Kills += 1;
+
+            this.Tail.Delete();
+            this.Position = this.startField;
+            this.RestoreTimer = this.Settings.deathPenalty;
+            this.MoveTimer = 0;
+        }
+
+        internal void RemoveFromGame()
+        {
+            this.Position = new BoardField(Player.MISSING, new Point(-1, -1));
+            this.Removed = true;
         }
     }
 }

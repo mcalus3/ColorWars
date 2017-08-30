@@ -76,14 +76,14 @@
     <Compile Include="ColorWarsGame\Graphics\ISquareDrawable.cs" />
     <Compile Include="ColorWarsGame\Graphics\PlayerRenderer.cs" />
     <Compile Include="ColorWarsGame\Graphics\ScoreboardRenderer.cs" />
-    <Compile Include="ColorWarsGame\Players\AttackingState.cs" />
-    <Compile Include="ColorWarsGame\Players\DefensiveState.cs" />
     <Compile Include="ColorWarsGame\Players\IPlayer.cs" />
-    <Compile Include="ColorWarsGame\Players\IPlayerState.cs" />
     <Compile Include="ColorWarsGame\Players\MissingPlayer.cs" />
     <Compile Include="ColorWarsGame\Players\Player.cs" />
     <Compile Include="ColorWarsGame\Players\PlayerSettings.cs" />
     <Compile Include="ColorWarsGame\Players\PlayerStats.cs" />
+    <Compile Include="ColorWarsGame\Players\States\AttackingState.cs" />
+    <Compile Include="ColorWarsGame\Players\States\DefensiveState.cs" />
+    <Compile Include="ColorWarsGame\Players\States\IPlayerState.cs" />
     <Compile Include="ColorWarsGame\Players\Tail.cs" />
     <Compile Include="ColorWarsGame\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

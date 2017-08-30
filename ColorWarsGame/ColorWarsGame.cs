@@ -46,7 +46,7 @@ namespace ColorWars
         {
             BoardField[] startFields = this.gameBoard.GetStartFields();
 
-            for (var i = 0; i < this.settings.players.Count(); i++)
+            for (var i = 0; i < this.settings.playersCount; i++)
             {
                 var newPlayer = new Player(this.settings.players[i], startFields[i]);
                 this.playerList.Add(newPlayer);
@@ -60,7 +60,7 @@ namespace ColorWars
             this.gameRenderer.CreateFieldRenderers(this.gameBoard.Board.Cast<ISquareDrawable>().ToArray());
             this.gameRenderer.CreatePlayerRenderers(this.playerList.ToArray());
             this.gameRenderer.CreateFieldRenderers(this.playerList.Select(p => p.Tail).Cast<ISquareDrawable>().ToArray());
-            this.gameRenderer.CreateScoreboardRenderers(this.scoreboard);
+            this.gameRenderer.CreateScoreboardRenderer(this.scoreboard);
 
             this.gameBoard.ClaimStartingTerritories(this.playerList.ToArray());
         }
@@ -70,11 +70,7 @@ namespace ColorWars
             //Check for endGame
             if ((int)gameTime.TotalGameTime.TotalSeconds >= this.settings.endTime)
             {
-                KeyboardState state = Keyboard.GetState();
-                if (state.IsKeyDown(Keys.Enter) || state.IsKeyDown(Keys.Escape))
-                {
-                    this.Exit();
-                }
+                WaitForKeyAndExit();
                 return;
             }
 
@@ -85,9 +81,26 @@ namespace ColorWars
             foreach (Player player in this.playerList.ToArray())
             {
                 player.Move();
+
+                //Delete players without territory
+                if (player.Stats.Territory == 0)
+                {
+                    player.RemoveFromGame();
+                    //this.gameRenderer.Renderers.Remove(this.gameRenderer.Renderers.Single(r => r.Stats.Territory == 0));
+                    this.playerList.Remove(player);
+                }
             }
 
             base.Update(gameTime);
+        }
+
+        private void WaitForKeyAndExit()
+        {
+            KeyboardState state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.Enter) || state.IsKeyDown(Keys.Escape))
+            {
+                this.Exit();
+            }
         }
 
         protected override void Draw(GameTime gameTime)

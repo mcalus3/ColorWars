@@ -18,6 +18,7 @@ namespace ColorWars.Graphics
         public GraphicsDeviceManager Graphics{get; set;}
         private Point mapDimension;
         private SpriteBatch sBatch;
+        private Scoreboard scoreboard;
 
         public GameRenderer(GraphicsDeviceManager gManager, ColorWarsSettings settings)
         {
@@ -61,5 +62,11 @@ namespace ColorWars.Graphics
                 this.Renderers.Add(new PlayerRenderer(this.Graphics, drawable, this.mapDimension, this.sBatch));
             }
         }
+
+        public void CreateScoreboardRenderer(Scoreboard scoreboard)
+        {
+            this.Renderers.Add(new ScoreboardRenderer(this.Graphics, scoreboard, this.sBatch));
+        }
+
     }
 }

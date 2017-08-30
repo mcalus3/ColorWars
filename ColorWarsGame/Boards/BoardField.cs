@@ -13,8 +13,8 @@ namespace ColorWars.Boards
     class BoardField : ISquareDrawable
     {
         public Point Position { get; set; }
-        public IPlayer Owner {get; set;}
-        public Dictionary<Direction, BoardField> Neighbours{get; set;}
+        public IPlayer Owner { get; set; }
+        public Dictionary<Direction, BoardField> Neighbours { get; set; }
         public event EventHandler PlayerEntered;
 
         public BoardField(IPlayer player, Point point)
@@ -33,7 +33,7 @@ namespace ColorWars.Boards
 
         public Point[] GetPoints()
         {
-            return new Point[] {this.Position};
+            return new Point[] { this.Position };
         }
 
         public Color GetColor()

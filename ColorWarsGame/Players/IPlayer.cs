@@ -8,7 +8,8 @@ using ColorWars.Graphics;
 
 namespace ColorWars.Players
 {
-    interface IPlayer : ISquareDrawable
+    interface IPlayer
     {
+        Color GetColor();
     }
 }

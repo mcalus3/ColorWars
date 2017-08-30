@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ColorWars.Players
+namespace ColorWars.Players.States
 {
     class DefensiveState: IPlayerState
     {

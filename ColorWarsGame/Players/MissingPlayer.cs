@@ -12,10 +12,5 @@ namespace ColorWars.Players
         {
             return Color.White;
         }
-
-        public Point[] GetPoints()
-        {
-            throw new InvalidOperationException();
-        }
     }
 }

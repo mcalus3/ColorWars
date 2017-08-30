@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using ColorWars.Boards;
 
-namespace ColorWars.Players
+namespace ColorWars.Players.States
 {
     class AttackingState: IPlayerState
     {
