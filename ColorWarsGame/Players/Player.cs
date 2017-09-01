@@ -68,10 +68,139 @@ namespace ColorWars
             {
                 field.owner = this;
             }
+
+
+            List<BoardField> reversedTail = new List<BoardField>(this.tail.positions);
+
+            reversedTail.Reverse();
+
+            foreach (BoardField lastTailField in reversedTail)
+            {
+                if(lastTailField.GetNeighbor(Direction.LEFT).owner != this &&
+                    lastTailField.GetNeighbor(Direction.RIGHT).owner != this)
+                {
+                    
+                    if(MarkPossible(lastTailField.GetNeighbor(Direction.LEFT)) )
+                    {
+                        //w lewo jest ok
+                        MarkPossibleAsOwner(lastTailField.GetNeighbor(Direction.LEFT));
+                    } else if (MarkPossible(lastTailField.GetNeighbor(Direction.RIGHT)))
+                    {
+                        //w prawo jest ok
+                        MarkPossibleAsOwner(lastTailField.GetNeighbor(Direction.RIGHT));
+                    } else
+                    {
+                        //nigdzie nie jest ok
+                    }
+                    continue;
+                } else if (lastTailField.GetNeighbor(Direction.UP).owner != this &&
+                    lastTailField.GetNeighbor(Direction.DOWN).owner != this)
+                {
+                    if (MarkPossible(lastTailField.GetNeighbor(Direction.UP)))
+                    {
+                        //w lewo jest ok
+                        MarkPossibleAsOwner(lastTailField.GetNeighbor(Direction.UP));
+                    }
+                    else if (MarkPossible(lastTailField.GetNeighbor(Direction.DOWN)))
+                    {
+                        //w prawo jest ok
+                        MarkPossibleAsOwner(lastTailField.GetNeighbor(Direction.DOWN));
+                    }
+                    else
+                    {
+                        //nigdzie nie jest ok
+                    }
+                    continue;
+                } 
+            }
+            
             tail.Delete();
         }
 
-    internal void SpawnTail()
+    internal void MarkPossibleAsOwner(BoardField field) 
+        {
+           
+            field.owner = this;
+            field.possibleOwner = Player.MISSING;
+            BoardField leftF = field.GetNeighbor(Direction.LEFT);
+            if(leftF.possibleOwner == this)
+            {
+                MarkPossibleAsOwner(leftF);
+            }
+
+            BoardField rightF = field.GetNeighbor(Direction.RIGHT);
+            if (rightF.possibleOwner == this)
+            {
+                MarkPossibleAsOwner(rightF);
+            }
+
+            BoardField upF = field.GetNeighbor(Direction.UP);
+            if (upF.possibleOwner == this)
+            {
+                MarkPossibleAsOwner(upF);
+            }
+
+
+            BoardField downF = field.GetNeighbor(Direction.DOWN);
+            if (downF.possibleOwner == this)
+            {
+                MarkPossibleAsOwner(downF);
+            }
+            
+ 
+        }
+
+        internal Boolean MarkPossible(BoardField field)
+        {
+            if (field == null)
+            {
+                return false;
+            }
+
+            field.possibleOwner = this;
+            BoardField leftF = field.GetNeighbor(Direction.LEFT);
+            if (leftF.owner != this && leftF.possibleOwner != this)
+            {
+                if (!MarkPossible(leftF))
+                {
+                    return false;
+                }
+            }
+
+            BoardField rightF = field.GetNeighbor(Direction.RIGHT);
+            if (rightF.owner != this && rightF.possibleOwner != this)
+            {
+                if (!MarkPossible(rightF))
+                {
+                    return false;
+                }
+            }
+
+            BoardField upF = field.GetNeighbor(Direction.UP);
+            if (upF.owner != this && upF.possibleOwner != this)
+            {
+                if (!MarkPossible(upF))
+                {
+                    return false;
+                }
+            }
+
+
+            BoardField downF = field.GetNeighbor(Direction.DOWN);
+            if (downF.owner != this && downF.possibleOwner != this)
+            {
+                if (!MarkPossible(downF))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+
+
+        internal void SpawnTail()
         {
             this.tail.AddField(this.position);
         }
