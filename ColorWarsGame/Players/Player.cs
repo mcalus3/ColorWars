@@ -76,7 +76,9 @@ namespace ColorWars
 
             foreach (BoardField lastTailField in reversedTail)
             {
-                if(lastTailField.GetNeighbor(Direction.LEFT).owner != this &&
+                if(lastTailField.GetNeighbor(Direction.LEFT) != null && 
+                    lastTailField.GetNeighbor(Direction.LEFT).owner != this &&
+                    lastTailField.GetNeighbor(Direction.RIGHT) != null &&
                     lastTailField.GetNeighbor(Direction.RIGHT).owner != this)
                 {
                     
@@ -92,8 +94,12 @@ namespace ColorWars
                     {
                         //nigdzie nie jest ok
                     }
+                    CleanPossible(lastTailField.GetNeighbor(Direction.LEFT));
+                    CleanPossible(lastTailField.GetNeighbor(Direction.RIGHT));
                     continue;
-                } else if (lastTailField.GetNeighbor(Direction.UP).owner != this &&
+                } else if (lastTailField.GetNeighbor(Direction.UP) != null &&
+                    lastTailField.GetNeighbor(Direction.UP).owner != null && 
+                    lastTailField.GetNeighbor(Direction.DOWN) != null &&
                     lastTailField.GetNeighbor(Direction.DOWN).owner != this)
                 {
                     if (MarkPossible(lastTailField.GetNeighbor(Direction.UP)))
@@ -110,6 +116,8 @@ namespace ColorWars
                     {
                         //nigdzie nie jest ok
                     }
+                    CleanPossible(lastTailField.GetNeighbor(Direction.UP));
+                    CleanPossible(lastTailField.GetNeighbor(Direction.DOWN));
                     continue;
                 } 
             }
@@ -123,31 +131,64 @@ namespace ColorWars
             field.owner = this;
             field.possibleOwner = Player.MISSING;
             BoardField leftF = field.GetNeighbor(Direction.LEFT);
-            if(leftF.possibleOwner == this)
+            if(leftF != null && leftF.possibleOwner == this)
             {
                 MarkPossibleAsOwner(leftF);
             }
 
             BoardField rightF = field.GetNeighbor(Direction.RIGHT);
-            if (rightF.possibleOwner == this)
+            if (rightF != null && rightF.possibleOwner == this)
             {
                 MarkPossibleAsOwner(rightF);
             }
 
             BoardField upF = field.GetNeighbor(Direction.UP);
-            if (upF.possibleOwner == this)
+            if (upF != null && upF.possibleOwner == this)
             {
                 MarkPossibleAsOwner(upF);
             }
 
 
             BoardField downF = field.GetNeighbor(Direction.DOWN);
-            if (downF.possibleOwner == this)
+            if (downF != null && downF.possibleOwner == this)
             {
                 MarkPossibleAsOwner(downF);
             }
             
  
+        }
+
+
+        internal void CleanPossible(BoardField field)
+        {
+
+            field.possibleOwner = Player.MISSING;
+            BoardField leftF = field.GetNeighbor(Direction.LEFT);
+            if (leftF != null && leftF.possibleOwner == this)
+            {
+                CleanPossible(leftF);
+            }
+
+            BoardField rightF = field.GetNeighbor(Direction.RIGHT);
+            if (rightF != null && rightF.possibleOwner == this)
+            {
+                CleanPossible(rightF);
+            }
+
+            BoardField upF = field.GetNeighbor(Direction.UP);
+            if (upF != null && upF.possibleOwner == this)
+            {
+                CleanPossible(upF);
+            }
+
+
+            BoardField downF = field.GetNeighbor(Direction.DOWN);
+            if (downF != null && downF.possibleOwner == this)
+            {
+                CleanPossible(downF);
+            }
+
+
         }
 
         internal Boolean MarkPossible(BoardField field)
@@ -157,8 +198,18 @@ namespace ColorWars
                 return false;
             }
 
-            field.possibleOwner = this;
             BoardField leftF = field.GetNeighbor(Direction.LEFT);
+            BoardField rightF = field.GetNeighbor(Direction.RIGHT);
+            BoardField upF = field.GetNeighbor(Direction.UP);
+            BoardField downF = field.GetNeighbor(Direction.DOWN);
+
+            if(leftF == null || rightF == null || upF == null || downF == null)
+            {
+                return false;
+            }
+
+            field.possibleOwner = this;
+            
             if (leftF.owner != this && leftF.possibleOwner != this)
             {
                 if (!MarkPossible(leftF))
@@ -167,7 +218,7 @@ namespace ColorWars
                 }
             }
 
-            BoardField rightF = field.GetNeighbor(Direction.RIGHT);
+            
             if (rightF.owner != this && rightF.possibleOwner != this)
             {
                 if (!MarkPossible(rightF))
@@ -176,7 +227,7 @@ namespace ColorWars
                 }
             }
 
-            BoardField upF = field.GetNeighbor(Direction.UP);
+            
             if (upF.owner != this && upF.possibleOwner != this)
             {
                 if (!MarkPossible(upF))
@@ -186,7 +237,7 @@ namespace ColorWars
             }
 
 
-            BoardField downF = field.GetNeighbor(Direction.DOWN);
+            
             if (downF.owner != this && downF.possibleOwner != this)
             {
                 if (!MarkPossible(downF))
