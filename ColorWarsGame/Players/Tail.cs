@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using System.Collections;
 
-using ColorWars.Graphics;
+using ColorWars.Services;
 using ColorWars.Boards;
 
 namespace ColorWars.Players

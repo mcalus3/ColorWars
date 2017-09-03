@@ -9,6 +9,8 @@ using ColorWars.Players;
 using ColorWars.Boards;
 using ColorWars.Graphics;
 using ColorWars.Controllers;
+using ColorWars.Services;
+
 
 namespace ColorWars
 {
@@ -86,8 +88,10 @@ namespace ColorWars
                 if (player.Stats.Territory == 0)
                 {
                     player.RemoveFromGame();
-                    //this.gameRenderer.Renderers.Remove(this.gameRenderer.Renderers.Single(r => r.Stats.Territory == 0));
                     this.playerList.Remove(player);
+                    //TODO: Remove renderer and scoreboard token
+                    //this.gameRenderer.Renderers.Remove(this.gameRenderer.Renderers.Single(r => r.Stats.Territory == 0));
+                    //this.Scoreboard
                 }
             }
 

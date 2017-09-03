@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 using ColorWars.Players;
-using ColorWars.Graphics;
-using System;
+using ColorWars.Services;
 
 namespace ColorWars.Boards
 {
@@ -17,8 +16,6 @@ namespace ColorWars.Boards
         public IPlayer Owner { get; set; }
         public Dictionary<Direction, BoardField> Neighbours { get; set; }
         public event EventHandler PlayerEntered;
-
-        public IPlayer possibleOwner;
 
         public BoardField(IPlayer player, Point point)
         {

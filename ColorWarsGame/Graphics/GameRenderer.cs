@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using ColorWars.Players;
 using ColorWars.Boards;
 
+using ColorWars.Services;
+
 namespace ColorWars.Graphics
 {
     class GameRenderer
@@ -18,7 +20,6 @@ namespace ColorWars.Graphics
         public GraphicsDeviceManager Graphics{get; set;}
         private Point mapDimension;
         private SpriteBatch sBatch;
-        private Scoreboard scoreboard;
 
         public GameRenderer(GraphicsDeviceManager gManager, ColorWarsSettings settings)
         {

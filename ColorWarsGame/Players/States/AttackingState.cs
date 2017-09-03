@@ -5,29 +5,42 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ColorWars.Boards;
+using ColorWars.Services;
 
 namespace ColorWars.Players.States
 {
-    class AttackingState: IPlayerState
+    class AttackingState : MovingState, IPlayerState
     {
-        private Player owner;
-
-        public AttackingState(Player owner)
+        public AttackingState(Player owner) : base(owner)
         {
-            this.owner = owner;
             this.OnMovement();
         }
 
-        public void OnMovement()
+        public override void ChangeDirection(Direction direction)
         {
-            if (this.owner.Position.Owner == this.owner)
+            if(direction == PlayerServices.ReversedDirection(base.owner.BufferedDirection))
             {
-                this.owner.AddTerritory();
-                this.owner.State = new DefensiveState(this.owner);
+                return;
+            }
+
+            base.ChangeDirection(direction);
+        }
+
+        public override void OnMovement()
+        {
+            base.OnMovement();
+            if(base.owner.Position.Owner == base.owner)
+            {
+                PlayerServices.AddTerritory(this.owner);
+
+                base.owner.Tail.Delete();
+                base.owner.OnTerritoryAdded(this.owner);
+
+                base.owner.State = new DefensiveState(base.owner);
             }
             else
             {
-                this.owner.SpawnTail();
+                base.owner.SpawnTail();
             }
         }
     }

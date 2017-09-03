@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ColorWars.Services;
+
 namespace ColorWars.Graphics
 {
     abstract class GameElementRenderer : IDrawable

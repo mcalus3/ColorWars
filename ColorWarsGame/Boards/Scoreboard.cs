@@ -13,7 +13,6 @@ namespace ColorWars.Boards
 {
     class Scoreboard
     {
-        private GraphicsDevice gDevice;
         public List<Player> Players { get; set; }
         private GameBoard board;
         public int FieldCount;

@@ -1,12 +1,14 @@
-﻿using ColorWars.Boards;
-using ColorWars.Players;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using ColorWars.Boards;
+using ColorWars.Players;
+using ColorWars.Services;
 
 namespace ColorWars.Graphics
 {
@@ -75,9 +77,9 @@ namespace ColorWars.Graphics
         {
             return new Rectangle(
                 0,
-                gManager.GraphicsDevice.Viewport.Height / this.playerTextures.Count * place,
+                gManager.GraphicsDevice.Viewport.Height / this.scoreboard.Players.Count * place,
                 gManager.GraphicsDevice.Viewport.Width / 4 * percent / 100,
-                gManager.GraphicsDevice.Viewport.Height / this.playerTextures.Count
+                gManager.GraphicsDevice.Viewport.Height / this.scoreboard.Players.Count
                 );
         }
 
@@ -85,9 +87,9 @@ namespace ColorWars.Graphics
         {
             return new Rectangle(
                 gManager.GraphicsDevice.Viewport.Width / 4 * percent / 100,
-                gManager.GraphicsDevice.Viewport.Height / this.playerTextures.Count * place,
+                gManager.GraphicsDevice.Viewport.Height / this.scoreboard.Players.Count * place,
                 gManager.GraphicsDevice.Viewport.Width / 4 * (100 - percent) / 100,
-                gManager.GraphicsDevice.Viewport.Height / this.playerTextures.Count
+                gManager.GraphicsDevice.Viewport.Height / this.scoreboard.Players.Count
                 );
         }
     }

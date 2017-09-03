@@ -1,0 +1,79 @@
+{
+  "windowSize": {
+    "X": 800,
+    "Y": 600
+  },
+  "mapDimension": {
+    "X": 30,
+    "Y": 30
+  },
+  "startingTerritorySize": 2,
+  "endTime": 100,
+  "playersCount": 4,
+  "players": [
+    {
+      "color": {
+        "B": 20,
+        "G": 220,
+        "R": 0,
+        "A": 255
+      },
+      "speed": 6,
+      "deathPenalty": 100,
+      "keyMapping": {
+        "UP": 87,
+        "DOWN": 83,
+        "LEFT": 65,
+        "RIGHT": 68
+      }
+    },
+    {
+      "color": {
+        "B": 50,
+        "G": 0,
+        "R": 230,
+        "A": 255
+      },
+      "speed": 6,
+      "deathPenalty": 100,
+      "keyMapping": {
+        "UP": 87,
+        "DOWN": 83,
+        "LEFT": 65,
+        "RIGHT": 68
+      }
+    },
+    {
+      "color": {
+        "B": 0,
+        "G": 165,
+        "R": 200,
+        "A": 255
+      },
+      "speed": 6,
+      "deathPenalty": 100,
+      "keyMapping": {
+        "UP": 73,
+        "DOWN": 75,
+        "LEFT": 74,
+        "RIGHT": 76
+      }
+    },
+    {
+      "color": {
+        "B": 200,
+        "G": 0,
+        "R": 40,
+        "A": 255
+      },
+      "speed": 6,
+      "deathPenalty": 100,
+      "keyMapping": {
+        "UP": 73,
+        "DOWN": 75,
+        "LEFT": 74,
+        "RIGHT": 76
+      }
+    }
+  ]
+}

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ColorWars.Graphics
+namespace ColorWars.Services
 {
     class ColorTools
     {
