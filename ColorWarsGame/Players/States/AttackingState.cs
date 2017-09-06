@@ -28,7 +28,6 @@ namespace ColorWars.Players.States
 
         public override void OnMovement()
         {
-            base.OnMovement();
             if(base.owner.Position.Owner == base.owner)
             {
                 PlayerServices.AddTerritory(this.owner);
@@ -42,6 +41,7 @@ namespace ColorWars.Players.States
             {
                 base.owner.SpawnTail();
             }
+            base.OnMovement();
         }
     }
 }
