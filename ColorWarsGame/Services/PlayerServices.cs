@@ -53,15 +53,13 @@ namespace ColorWars.Services
 
         private static bool ClaimTerritoryAlgorithm(Player player, BoardField currentField, List<BoardField> outerNeighbours, List<BoardField> joinedArea)
         {
-            // c.Dodaj siebie do listy "połączony obszar"
             joinedArea.Add(currentField);
-            // d.Jeżeli którykolwiek z twoich sąsiadów to null, dodaj listę do listy "zewnętrze", cofnij się do punktu 3(przejdź do następnego pola).
             if(currentField.Neighbours.Values.Any(f => f == null))
             {
                 outerNeighbours.AddRange(joinedArea.ToArray());
                 return false;
             }
-            //e.Dla każdego z sąsiadów, który nie jest jeszcez w liście "połączony obszar" ani zajęty przez gracza wykonaj punkty c. do e. (rekurencja)
+            //For each of neighbours thatarent in joined area list and does not belong to player make recurrent call
             bool EachNeighbourReturnsTrue = true;
             foreach(BoardField neighbour in currentField.Neighbours.Values)
             {

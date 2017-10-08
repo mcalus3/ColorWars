@@ -5,12 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: InternalsVisibleTo("ColorWarsTest")]
-[assembly: AssemblyTitle("ColorWars")]
-[assembly: AssemblyProduct("ColorWars")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyTitle("ColorWarsTest")]
 [assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ColorWarsTest")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -21,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e45fcf2b-5772-4977-b5ac-49a697b9b3f2")]
+[assembly: Guid("ae18e453-bab9-4877-899b-8105aa77977d")]
 
 // Version information for an assembly consists of the following four values:
 //

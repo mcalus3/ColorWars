@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorWars", "ColorWars.csproj", "{C58E28BD-1F27-4C01-BFCC-997EEF734976}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorWarsTest", "ColorWarsTest\ColorWarsTest.csproj", "{AE18E453-BAB9-4877-899B-8105AA77977D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,14 @@ Global
 		{C58E28BD-1F27-4C01-BFCC-997EEF734976}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C58E28BD-1F27-4C01-BFCC-997EEF734976}.Release|x64.ActiveCfg = Release|x64
 		{C58E28BD-1F27-4C01-BFCC-997EEF734976}.Release|x64.Build.0 = Release|x64
+		{AE18E453-BAB9-4877-899B-8105AA77977D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE18E453-BAB9-4877-899B-8105AA77977D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE18E453-BAB9-4877-899B-8105AA77977D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AE18E453-BAB9-4877-899B-8105AA77977D}.Debug|x64.Build.0 = Debug|Any CPU
+		{AE18E453-BAB9-4877-899B-8105AA77977D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE18E453-BAB9-4877-899B-8105AA77977D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE18E453-BAB9-4877-899B-8105AA77977D}.Release|x64.ActiveCfg = Release|Any CPU
+		{AE18E453-BAB9-4877-899B-8105AA77977D}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

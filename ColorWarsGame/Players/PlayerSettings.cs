@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using ColorWars.Boards;
+using ColorWars.Services;
 
 namespace ColorWars.Players
 {
