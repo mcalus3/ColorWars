@@ -14,13 +14,13 @@ namespace ColorWars.Players.States
         {
         }
 
-        public override void OnMovement()
+        public override void OnUpdate()
         {
             if(base.owner.Position.Owner != base.owner)
             {
                 this.owner.State = new AttackingState(this.owner);
             }
-            base.OnMovement();
+            base.OnUpdate();
         }
     }
 }

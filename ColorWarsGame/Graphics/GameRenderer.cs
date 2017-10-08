@@ -18,6 +18,8 @@ namespace ColorWars.Graphics
     {
         public List<IDrawable> Renderers {get; set;}
         public GraphicsDeviceManager Graphics{get; set;}
+        public List<PlayerRenderer> PlayerRenderers { get; private set; }
+
         private Point mapDimension;
         private SpriteBatch sBatch;
 
@@ -29,6 +31,7 @@ namespace ColorWars.Graphics
             this.mapDimension = settings.mapDimension;
 
             this.Renderers = new List<IDrawable>();
+            this.PlayerRenderers = new List<PlayerRenderer>();
         }
 
         public void Initialize()
@@ -41,6 +44,11 @@ namespace ColorWars.Graphics
             this.sBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
 
             foreach (IDrawable renderer in this.Renderers)
+            {
+                renderer.Draw();
+            }
+
+            foreach(IDrawable renderer in this.PlayerRenderers)
             {
                 renderer.Draw();
             }
@@ -60,7 +68,7 @@ namespace ColorWars.Graphics
         {
             foreach (Player drawable in drawables)
             {
-                this.Renderers.Add(new PlayerRenderer(this.Graphics, drawable, this.mapDimension, this.sBatch));
+                this.PlayerRenderers.Add(new PlayerRenderer(this.Graphics, drawable, this.mapDimension, this.sBatch));
             }
         }
 
@@ -69,5 +77,9 @@ namespace ColorWars.Graphics
             this.Renderers.Add(new ScoreboardRenderer(this.Graphics, scoreboard, this.sBatch));
         }
 
+        public void RemovePlayerRenderer(IPlayer player)
+        {
+            this.PlayerRenderers.RemoveAll(r => r.RenderedPlayer == player);
+        }
     }
 }

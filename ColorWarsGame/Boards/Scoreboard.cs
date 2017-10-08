@@ -22,7 +22,7 @@ namespace ColorWars.Boards
             this.Players = playerList;
             this.board = board;
             this.FieldCount = this.board.Board.Length;
-        }        
+        }
 
         public void Update(object sender, EventArgs e)
         {

@@ -25,7 +25,7 @@ namespace ColorWars.Players.States
             this.direction = direction;
         }
 
-        public virtual void OnMovement()
+        public virtual void OnUpdate()
         {
             if(owner.MoveTimer != owner.Settings.speed)
             {
@@ -33,17 +33,17 @@ namespace ColorWars.Players.States
             }
             else
             {
-                owner.Position = owner.Position.Neighbours[owner.BufferedDirection];
+                owner.MoveTimer = 0;
+                owner.Move(owner.BufferedDirection);
 
                 if(owner.Position == null)
                 {
                     owner.Kill(owner);
                 }
 
-                owner.MoveTimer = 0;
                 owner.Position.OnPlayerEntered(owner);
-                this.owner.BufferedDirection = this.direction;
-                owner.ChangeDirection(this.direction);
+
+                owner.BufferedDirection = this.direction;
             }
         }
     }

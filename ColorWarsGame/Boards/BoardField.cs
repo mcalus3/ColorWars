@@ -22,7 +22,6 @@ namespace ColorWars.Boards
             this.Owner = player;
             this.Position = point;
             this.Neighbours = new Dictionary<Direction, BoardField>();
-
         }
 
         internal void OnPlayerEntered(Player player)

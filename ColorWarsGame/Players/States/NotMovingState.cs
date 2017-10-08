@@ -24,7 +24,7 @@ namespace ColorWars.Players.States
             base.owner.State = new DefensiveState(owner);
         }
 
-        public override void OnMovement()
+        public override void OnUpdate()
         {
 
         }

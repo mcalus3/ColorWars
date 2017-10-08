@@ -14,18 +14,18 @@ namespace ColorWars.Graphics
 {
     class PlayerRenderer : GameElementRenderer
     {
-        private Player renderedPlayer;
+        internal Player RenderedPlayer { get; set; }
 
         public PlayerRenderer(GraphicsDeviceManager gdManager, Player drawedObject, Point mapDimension, SpriteBatch sBatch)
             : base(gdManager, (ISquareDrawable)drawedObject, mapDimension, sBatch)
         {
-            this.renderedPlayer = drawedObject;
+            this.RenderedPlayer = drawedObject;
         }
 
         public override void Draw()
         {
             //for every field that rendered object is occupying write a rectangle covering whole field
-            foreach (Point field in this.renderedPlayer.GetPoints())
+            foreach (Point field in this.RenderedPlayer.GetPoints())
             {
                 base.spriteBatch.Draw(base.Texture, this.GetPlayerLocation(base.GetRectangleFromField(field)), base.RenderedObject.GetColor());
             }
@@ -36,10 +36,10 @@ namespace ColorWars.Graphics
         {
             int newX = rectangle.X;
             int newY = rectangle.Y;
-            int differenceX = rectangle.Width * this.renderedPlayer.MoveTimer / this.renderedPlayer.Settings.speed;
-            int differenceY = rectangle.Height * this.renderedPlayer.MoveTimer / this.renderedPlayer.Settings.speed;
+            int differenceX = rectangle.Width * this.RenderedPlayer.MoveTimer / this.RenderedPlayer.Settings.speed;
+            int differenceY = rectangle.Height * this.RenderedPlayer.MoveTimer / this.RenderedPlayer.Settings.speed;
 
-            switch (this.renderedPlayer.BufferedDirection)
+            switch (this.RenderedPlayer.BufferedDirection)
             {
                 case Direction.UP:
                     newY -= differenceY;

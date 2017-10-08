@@ -22,7 +22,7 @@ namespace ColorWars.Players.States
             owner.Position = owner.startField;
         }
 
-        public override void OnMovement()
+        public override void OnUpdate()
         {
             if(this.RestoreTimer == 0)
             {

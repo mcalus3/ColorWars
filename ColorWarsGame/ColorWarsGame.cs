@@ -20,7 +20,7 @@ namespace ColorWars
         private List<Player> playerList;
         private GameBoard gameBoard;
         private GameRenderer gameRenderer;
-        private KeyboardInputController gameController;
+        private ControllerList gameControllers;
         private Scoreboard scoreboard;
 
         public ColorWarsGame(ColorWarsSettings settings)
@@ -29,7 +29,7 @@ namespace ColorWars
             this.playerList = new List<Player>();
             this.gameBoard = new GameBoard(this.settings.startingTerritorySize, this.settings.mapDimension);
             this.gameRenderer = new GameRenderer(new GraphicsDeviceManager(this), this.settings);
-            this.gameController = new KeyboardInputController();
+            this.gameControllers = new ControllerList();
             this.scoreboard = new Scoreboard(this.playerList, this.gameBoard);
         }
 
@@ -52,7 +52,7 @@ namespace ColorWars
             {
                 var newPlayer = new Player(this.settings.players[i], startFields[i]);
                 this.playerList.Add(newPlayer);
-                this.gameController.Commands.Add(new PlayerMoveCommand(settings.players[i].keyMapping, this.playerList[i]));
+                this.gameControllers.Commands.Add(new PlayerKeyboardController(settings.players[i].keyMapping, this.playerList[i]));
                 newPlayer.TerritoryAddedEvent += this.scoreboard.Update;
             }
         }
@@ -77,21 +77,19 @@ namespace ColorWars
             }
 
             //Read and evaluate input
-            this.gameController.ExecuteCommands();
+            this.gameControllers.ExecuteCommands();
 
             //Move players
             foreach (Player player in this.playerList.ToArray())
             {
-                player.Move();
+                player.Update();
 
                 //Delete players without territory
                 if (player.Stats.Territory == 0)
                 {
-                    player.RemoveFromGame();
                     this.playerList.Remove(player);
-                    //TODO: Remove renderer and scoreboard token
-                    //this.gameRenderer.Renderers.Remove(this.gameRenderer.Renderers.Single(r => r.Stats.Territory == 0));
-                    //this.Scoreboard
+                    this.gameRenderer.RemovePlayerRenderer(player);
+                    this.gameControllers.RemoveCommand(player);
                 }
             }
 

@@ -9,7 +9,7 @@ namespace ColorWars.Players.States
 {
     interface IPlayerState
     {
-        void OnMovement();
+        void OnUpdate();
         void ChangeDirection(Direction direction);
     }
 }

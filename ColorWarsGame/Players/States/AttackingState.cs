@@ -13,7 +13,7 @@ namespace ColorWars.Players.States
     {
         public AttackingState(Player owner) : base(owner)
         {
-            this.OnMovement();
+            base.owner.SpawnTail();
         }
 
         public override void ChangeDirection(Direction direction)
@@ -26,7 +26,7 @@ namespace ColorWars.Players.States
             base.ChangeDirection(direction);
         }
 
-        public override void OnMovement()
+        public override void OnUpdate()
         {
             if(base.owner.Position.Owner == base.owner)
             {
@@ -41,7 +41,7 @@ namespace ColorWars.Players.States
             {
                 base.owner.SpawnTail();
             }
-            base.OnMovement();
+            base.OnUpdate();
         }
     }
 }
