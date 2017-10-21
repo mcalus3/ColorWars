@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
 using ColorWars.Services;
-using ColorWars.Players.States;
 using ColorWars.Players;
 using ColorWars.Boards;
 using System;

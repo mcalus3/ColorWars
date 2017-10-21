@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 
 using ColorWars.Services;
-using ColorWars.Players;
 using ColorWars.Actors;
 using ColorWarsTest.Mocks;
 

@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 
 using ColorWars.Boards;
-using ColorWars.Players.States;
 using ColorWars.Services;
 
 namespace ColorWars.Players

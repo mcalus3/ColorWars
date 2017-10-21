@@ -1,8 +1,6 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 using ColorWars.Boards;
-using ColorWars.Players.States;
 using ColorWars.Services;
 using ColorWars.Players;
 

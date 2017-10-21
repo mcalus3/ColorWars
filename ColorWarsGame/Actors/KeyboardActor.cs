@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Input;
 
 using ColorWars.Players;
 using ColorWars.Services;
-using System;
 
 namespace ColorWars.Actors
 {

@@ -1,9 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
-using System.Xml;
-using System.Xml.Serialization;
 using System.IO;
 
 namespace ColorWars

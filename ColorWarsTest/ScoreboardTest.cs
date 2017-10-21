@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ColorWars.Players;
 using ColorWars.Boards;
-using Microsoft.Xna.Framework;
 using ColorWarsTest.Mocks;
 
 namespace ColorWarsTest

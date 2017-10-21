@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using ColorWars.Boards;
-using ColorWars.Services;
-using Microsoft.Xna.Framework;
-
-namespace ColorWars.Players.States
+﻿namespace ColorWars.Players.States
 {
     class WaitingForRespawnState : MovingState
     {

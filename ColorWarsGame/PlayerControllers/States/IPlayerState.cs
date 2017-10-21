@@ -1,6 +1,4 @@
-﻿using ColorWars.Services;
-
-namespace ColorWars.Players.States
+﻿namespace ColorWars.Players.States
 {
     interface IPlayerState
     {
