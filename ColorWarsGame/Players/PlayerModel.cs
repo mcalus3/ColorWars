@@ -7,36 +7,30 @@ using ColorWars.Services;
 
 namespace ColorWars.Players
 {
-    class Player : IPlayer, ISquareDrawable
+    class PlayerModel : IPlayer, ISquareDrawable
     {
-        public static readonly IPlayer MISSING = new MissingPlayer();
-
         public event EventHandler TerritoryAddedEvent;
-        public readonly BoardField startField;
-        public PlayerSettings Settings { get; set; }
+        public event EventHandler KilledEvent;
+        public Color Color { get; set; }
         public PlayerStats Stats { get; set; }
         public Tail Tail { get; set; }
 
-        public IPlayerState State { get; set; }
         public BoardField Position { get; set; }
-        public Direction BufferedDirection { get; set; }
-        public int MoveTimer { get; set; }
+        public Direction Direction { get; set; }
+        public float MovementFraction { get; set; }
 
-        public Player(PlayerSettings settings, BoardField startField)
+        public PlayerModel(Color color, BoardField startField)
         {
-            this.Settings = settings;
+            this.Color = color;
             this.Position = startField;
-            this.startField = startField;
-
-            this.BufferedDirection = Direction.NONE;
-            this.State = new NotMovingState(this);
+            this.Direction = Direction.NONE;
             this.Tail = new Tail(this);
             this.Stats = new PlayerStats();
         }
 
         public Color GetColor()
         {
-            return this.Settings.color;
+            return this.Color;
         }
 
         public Point[] GetPoints()
@@ -44,19 +38,14 @@ namespace ColorWars.Players
             return new Point[] { this.Position.GetPoints()[0] };
         }
 
-        public void Update()
+        public virtual void ChangeDirection(Direction direction)
         {
-            this.State.OnUpdate();
+            this.Direction = direction;
         }
 
-        public virtual void ChangeNextDirection(Direction direction)
+        public void Kill(PlayerModel killer)
         {
-            this.State.ChangeDirection(direction);
-        }
-
-        public void Kill(Player killer)
-        {
-            this.State = new WaitingForRespawnState(this);
+            this.onKill(killer);
             if(killer != this)
             {
                 this.Stats.Deaths++;
@@ -74,9 +63,15 @@ namespace ColorWars.Players
             this.Tail.AddField(this.Position);
         }
 
-        internal void OnTerritoryAdded(Player player)
+        internal void OnTerritoryAdded()
         {
-            this.TerritoryAddedEvent?.Invoke(player, new EventArgs());
+            this.TerritoryAddedEvent?.Invoke(this, new EventArgs());
         }
+
+        private void onKill(PlayerModel killer)
+        {
+            this.KilledEvent?.Invoke(killer, new EventArgs());
+        }
+
     }
 }

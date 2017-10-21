@@ -25,7 +25,7 @@ namespace ColorWars.Boards
             {
                 for (int j = 0; j < this.dimension.Y; j++)
                 {
-                    this.Board[i, j] = new BoardField(Player.MISSING, new Point(i, j));
+                    this.Board[i, j] = new BoardField(MissingPlayer.Instance, new Point(i, j));
                 }
             }
 
@@ -75,16 +75,16 @@ namespace ColorWars.Boards
             return fields;
         }
 
-        public void ClaimStartingTerritories(Player[] players)
+        public void ClaimStartingTerritories(PlayerModel[] players)
         {
-            foreach (Player player in players)
+            foreach (PlayerModel player in players)
             {
                 int depth = this.startingTerritorySize;
                 this.RecursiveTerritoryClaiming(player, player.Position, depth);
             }
         }
 
-        private void RecursiveTerritoryClaiming(Player player, BoardField field, int depth)
+        private void RecursiveTerritoryClaiming(PlayerModel player, BoardField field, int depth)
         {
 
             if (field == null)
@@ -103,9 +103,9 @@ namespace ColorWars.Boards
             }
         }
 
-        public void UpdatePlayersTerritory(Player[] players)
+        public void UpdatePlayersTerritory(PlayerModel[] players)
         {
-            foreach (Player player in players)
+            foreach (PlayerModel player in players)
             {
                 player.Stats.Territory = this.Board.Cast<BoardField>().Where(f => f.Owner == player).Count();
             }

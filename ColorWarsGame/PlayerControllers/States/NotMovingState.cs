@@ -12,21 +12,19 @@ namespace ColorWars.Players.States
 {
     class NotMovingState : MovingState, IPlayerState
     {
-        public NotMovingState(Player owner) : base(owner)
+        public NotMovingState(PlayerController owner) : base(owner)
         {
-
         }
 
         public override void ChangeDirection(Direction direction)
         {
-            base.owner.BufferedDirection = direction;
+            owner.Direction = direction;
             base.ChangeDirection(direction);
-            base.owner.State = new DefensiveState(owner);
+            owner.MovingState = new DefensiveState(owner);
         }
 
         public override void OnUpdate()
         {
-
         }
     }
 }

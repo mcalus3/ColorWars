@@ -8,17 +8,17 @@ using ColorWars.Services;
 
 namespace ColorWars.Players.States
 {
-    class DefensiveState : MovingState, IPlayerState
+    class DefensiveState : MovingState
     {
-        public DefensiveState(Player owner) : base(owner)
+        public DefensiveState(PlayerController owner) : base(owner)
         {
         }
 
         public override void OnUpdate()
         {
-            if(base.owner.Position.Owner != base.owner)
+            if(!owner.OnOwnTerritory)
             {
-                this.owner.State = new AttackingState(this.owner);
+                this.owner.MovingState = new AttackingState(this.owner);
             }
             base.OnUpdate();
         }

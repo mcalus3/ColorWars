@@ -8,7 +8,7 @@ using System.Linq;
 using ColorWars.Players;
 using ColorWars.Boards;
 using ColorWars.Graphics;
-using ColorWars.Controllers;
+using ColorWars.Actors;
 using ColorWars.Services;
 
 
@@ -17,19 +17,21 @@ namespace ColorWars
     class ColorWarsGame : Game
     {
         private ColorWarsSettings settings;
-        private List<Player> playerList;
+        private List<PlayerModel> playerList;
+        private List<PlayerController> playerControllersList;
         private GameBoard gameBoard;
         private GameRenderer gameRenderer;
-        private ControllerList gameControllers;
+        private ActorList gameActors;
         private Scoreboard scoreboard;
 
         public ColorWarsGame(ColorWarsSettings settings)
         {
             this.settings = settings;
-            this.playerList = new List<Player>();
+            this.playerList = new List<PlayerModel>();
+            this.playerControllersList = new List<PlayerController>();
             this.gameBoard = new GameBoard(this.settings.startingTerritorySize, this.settings.mapDimension);
             this.gameRenderer = new GameRenderer(new GraphicsDeviceManager(this), this.settings);
-            this.gameControllers = new ControllerList();
+            this.gameActors = new ActorList();
             this.scoreboard = new Scoreboard(this.playerList, this.gameBoard);
         }
 
@@ -50,9 +52,12 @@ namespace ColorWars
 
             for (var i = 0; i < this.settings.playersCount; i++)
             {
-                var newPlayer = new Player(this.settings.players[i], startFields[i]);
+                PlayerSettings playerSettings = this.settings.players[i];
+                var newPlayer = new PlayerModel(playerSettings.color, startFields[i]);
                 this.playerList.Add(newPlayer);
-                this.gameControllers.Commands.Add(new PlayerKeyboardController(settings.players[i].keyMapping, this.playerList[i]));
+                var controller = new PlayerController(newPlayer, startFields[i], playerSettings.speed, playerSettings.deathPenalty);
+                this.playerControllersList.Add(controller);
+                this.gameActors.Actors.Add(new KeyboardActor(playerSettings.keyMapping, controller));
                 newPlayer.TerritoryAddedEvent += this.scoreboard.Update;
             }
         }
@@ -77,19 +82,22 @@ namespace ColorWars
             }
 
             //Read and evaluate input
-            this.gameControllers.ExecuteCommands();
+            this.gameActors.ExecuteActors();
 
             //Move players
-            foreach (Player player in this.playerList.ToArray())
+            foreach(PlayerController player in this.playerControllersList.ToArray())
             {
                 player.Update();
 
-                //Delete players without territory
-                if (player.Stats.Territory == 0)
+            }
+            //Delete players without territory
+            foreach(PlayerModel player in this.playerList.ToArray())
+            {
+                if(player.Stats.Territory == 0)
                 {
                     this.playerList.Remove(player);
                     this.gameRenderer.RemovePlayerRenderer(player);
-                    this.gameControllers.RemoveCommand(player);
+                    this.gameActors.RemoveActor(player);
                 }
             }
 

@@ -4,14 +4,14 @@ using Microsoft.Xna.Framework.Input;
 using ColorWars.Players;
 using ColorWars.Services;
 
-namespace ColorWars.Controllers
+namespace ColorWars.Actors
 {
-    class PlayerKeyboardController
+    class KeyboardActor
     {
-        internal Player Player { get; set; }
+        internal PlayerController Player { get; set; }
         private Dictionary<Direction, Keys> mapping;
 
-        public PlayerKeyboardController(Dictionary<Direction, Keys> mapping, Player player)
+        public KeyboardActor(Dictionary<Direction, Keys> mapping, PlayerController player)
         {
             this.Player = player;
             this.mapping = mapping;

@@ -46,6 +46,7 @@ namespace ColorWars.Graphics
             foreach (IDrawable renderer in this.Renderers)
             {
                 renderer.Draw();
+
             }
 
             foreach(IDrawable renderer in this.PlayerRenderers)
@@ -64,9 +65,9 @@ namespace ColorWars.Graphics
             }
         }
 
-        public void CreatePlayerRenderers(Player[] drawables)
+        public void CreatePlayerRenderers(PlayerModel[] drawables)
         {
-            foreach (Player drawable in drawables)
+            foreach (PlayerModel drawable in drawables)
             {
                 this.PlayerRenderers.Add(new PlayerRenderer(this.Graphics, drawable, this.mapDimension, this.sBatch));
             }

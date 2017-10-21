@@ -9,16 +9,16 @@ using ColorWars.Services;
 
 namespace ColorWars.Players.States
 {
-    class AttackingState : MovingState, IPlayerState
+    class AttackingState : MovingState
     {
-        public AttackingState(Player owner) : base(owner)
+        public AttackingState(PlayerController owner) : base(owner)
         {
             base.owner.SpawnTail();
         }
 
         public override void ChangeDirection(Direction direction)
         {
-            if(direction == PlayerServices.ReversedDirection(base.owner.BufferedDirection))
+            if(direction == PlayerServices.ReversedDirection(owner.Direction))
             {
                 return;
             }
@@ -28,18 +28,18 @@ namespace ColorWars.Players.States
 
         public override void OnUpdate()
         {
-            if(base.owner.Position.Owner == base.owner)
+            if(owner.OnOwnTerritory)
             {
-                PlayerServices.AddTerritory(this.owner);
+                PlayerServices.AddTerritory(owner.Player);
 
-                base.owner.Tail.Delete();
-                base.owner.OnTerritoryAdded(this.owner);
+                owner.DeleteTail();
+                owner.InvokeOnTerritoryAdded();
 
-                base.owner.State = new DefensiveState(base.owner);
+                owner.MovingState = new DefensiveState(base.owner);
             }
             else
             {
-                base.owner.SpawnTail();
+                owner.SpawnTail();
             }
             base.OnUpdate();
         }

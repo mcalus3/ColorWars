@@ -23,7 +23,7 @@ namespace ColorWarsTest
         {
             foreach(BoardField field in testBoard)
             {
-                field.Owner = Player.MISSING;
+                field.Owner = MissingPlayer.Instance;
             }
         }
 
@@ -66,12 +66,12 @@ namespace ColorWarsTest
             BoardField[,] fields = new BoardField[,]
             {
                 {
-                    new BoardField(Player.MISSING, new Point(0, 0)),
-                    new BoardField(Player.MISSING, new Point(1, 0))
+                    new BoardField(MissingPlayer.Instance, new Point(0, 0)),
+                    new BoardField(MissingPlayer.Instance, new Point(1, 0))
                 },
                 {
-                    new BoardField(Player.MISSING, new Point(0, 1)),
-                    new BoardField(Player.MISSING, new Point(1, 1))
+                    new BoardField(MissingPlayer.Instance, new Point(0, 1)),
+                    new BoardField(MissingPlayer.Instance, new Point(1, 1))
                 }
             };
 
@@ -92,16 +92,16 @@ namespace ColorWarsTest
         public void ClaimStartingTerritoriesTest()
         {
             var board = this.gameBoard;
-            var player = new Player(new PlayerSettings(), board.Board[0, 0]);
+            var player = new PlayerModel(new Color(), board.Board[0, 0]);
 
-            board.ClaimStartingTerritories(new Player[]{ player });
+            board.ClaimStartingTerritories(new PlayerModel[]{ player });
 
             Assert.IsTrue(board.Board[0, 0].Owner == player);
             Assert.IsTrue(board.Board[0, 1].Owner == player);
             Assert.IsTrue(board.Board[1, 0].Owner == player);
-            Assert.IsTrue(board.Board[1, 1].Owner == Player.MISSING);
-            Assert.IsTrue(board.Board[2, 0].Owner == Player.MISSING);
-            Assert.IsTrue(board.Board[0, 2].Owner == Player.MISSING);
+            Assert.IsTrue(board.Board[1, 1].Owner == MissingPlayer.Instance);
+            Assert.IsTrue(board.Board[2, 0].Owner == MissingPlayer.Instance);
+            Assert.IsTrue(board.Board[0, 2].Owner == MissingPlayer.Instance);
 
             BoardTest.ClearTestBoard(board.Board);
         }
@@ -110,13 +110,13 @@ namespace ColorWarsTest
         public void UpdatePlayersTerritoryTest()
         {
             var board = this.gameBoard;
-            var player = new Player(new PlayerSettings(), board.Board[0, 0]);
+            var player = new PlayerModel(new Color(), board.Board[0, 0]);
 
             board.Board[0, 0].Owner = player;
             board.Board[0, 1].Owner = player;
             board.Board[1, 0].Owner = player;
 
-            board.UpdatePlayersTerritory(new Player[] { player });
+            board.UpdatePlayersTerritory(new PlayerModel[] { player });
 
             Assert.IsTrue(player.Stats.Territory == 3);
 

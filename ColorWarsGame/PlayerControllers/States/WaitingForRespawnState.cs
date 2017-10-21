@@ -10,26 +10,25 @@ using Microsoft.Xna.Framework;
 
 namespace ColorWars.Players.States
 {
-    class WaitingForRespawnState : MovingState, IPlayerState
+    class WaitingForRespawnState : MovingState
     {
         private int RestoreTimer;
 
-        public WaitingForRespawnState(Player owner) : base(owner)
+        public WaitingForRespawnState(PlayerController owner) : base(owner)
         {
-            this.RestoreTimer = owner.Settings.deathPenalty;
+            this.RestoreTimer = owner.DeathPenalty;
 
-            owner.Tail.Delete();
-            owner.Position = owner.startField;
+            owner.DeleteTail();
+            owner.Field = owner.StartField;
         }
 
         public override void OnUpdate()
         {
             if(this.RestoreTimer == 0)
             {
-                base.owner.State = new DefensiveState(owner);
+                owner.MovingState = new DefensiveState(owner);
             }
             this.RestoreTimer--;
-
         }
     }
 }

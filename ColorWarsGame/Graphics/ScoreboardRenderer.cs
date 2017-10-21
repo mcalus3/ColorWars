@@ -16,7 +16,7 @@ namespace ColorWars.Graphics
     {
         private SpriteBatch sBatch;
         private Scoreboard scoreboard;
-        private Dictionary<Player, Texture2D> playerTextures;
+        private Dictionary<PlayerModel, Texture2D> playerTextures;
         private GraphicsDeviceManager gManager;
         private Texture2D blackTexture;
 
@@ -25,9 +25,9 @@ namespace ColorWars.Graphics
             this.sBatch = sBatch;
             this.scoreboard = scoreboard;
             this.gManager = gdManager;
-            this.playerTextures = new Dictionary<Player, Texture2D>();
+            this.playerTextures = new Dictionary<PlayerModel, Texture2D>();
 
-            foreach (Player player in this.scoreboard.Players)
+            foreach (PlayerModel player in this.scoreboard.Players)
             {
                 var texture = new Texture2D(gdManager.GraphicsDevice, 1, 1);
                 texture.SetData(new[] { ColorTools.VeryTransparent(player.GetColor()) });
@@ -43,7 +43,7 @@ namespace ColorWars.Graphics
         {
             int place = 0;
 
-            foreach (Player player in this.scoreboard.Players)
+            foreach (PlayerModel player in this.scoreboard.Players)
             {
                 int percentOfLeader;
                 if (place == 0)

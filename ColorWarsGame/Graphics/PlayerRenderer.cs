@@ -1,22 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using ColorWars.Players;
-using ColorWars.Boards;
 using ColorWars.Services;
 
 namespace ColorWars.Graphics
 {
     class PlayerRenderer : GameElementRenderer
     {
-        internal Player RenderedPlayer { get; set; }
+        internal PlayerModel RenderedPlayer { get; set; }
 
-        public PlayerRenderer(GraphicsDeviceManager gdManager, Player drawedObject, Point mapDimension, SpriteBatch sBatch)
+        public PlayerRenderer(GraphicsDeviceManager gdManager, PlayerModel drawedObject, Point mapDimension, SpriteBatch sBatch)
             : base(gdManager, (ISquareDrawable)drawedObject, mapDimension, sBatch)
         {
             this.RenderedPlayer = drawedObject;
@@ -36,10 +30,10 @@ namespace ColorWars.Graphics
         {
             int newX = rectangle.X;
             int newY = rectangle.Y;
-            int differenceX = rectangle.Width * this.RenderedPlayer.MoveTimer / this.RenderedPlayer.Settings.speed;
-            int differenceY = rectangle.Height * this.RenderedPlayer.MoveTimer / this.RenderedPlayer.Settings.speed;
+            int differenceX = (int)(rectangle.Width * this.RenderedPlayer.MovementFraction);
+            int differenceY = (int)(rectangle.Height * this.RenderedPlayer.MovementFraction);
 
-            switch (this.RenderedPlayer.BufferedDirection)
+            switch (this.RenderedPlayer.Direction)
             {
                 case Direction.UP:
                     newY -= differenceY;

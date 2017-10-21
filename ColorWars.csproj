@@ -61,16 +61,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ColorWarsGame\Boards\BoardField.cs" />
-    <Compile Include="ColorWarsGame\Players\States\NotMovingState.cs" />
-    <Compile Include="ColorWarsGame\Players\States\WaitingForRespawnState.cs" />
-    <Compile Include="ColorWarsGame\Players\States\MovingState.cs" />
+    <Compile Include="ColorWarsGame\PlayerControllers\PlayerController.cs" />
+    <Compile Include="ColorWarsGame\PlayerControllers\States\NotMovingState.cs" />
+    <Compile Include="ColorWarsGame\PlayerControllers\States\WaitingForRespawnState.cs" />
+    <Compile Include="ColorWarsGame\PlayerControllers\States\MovingState.cs" />
     <Compile Include="ColorWarsGame\Services\Direction.cs" />
     <Compile Include="ColorWarsGame\Boards\Scoreboard.cs" />
     <Compile Include="ColorWarsGame\ColorWarsGame.cs" />
     <Compile Include="ColorWarsGame\Boards\GameBoard.cs" />
     <Compile Include="ColorWarsGame\ColorWarsSettings.cs" />
-    <Compile Include="ColorWarsGame\Controllers\ControllerList.cs" />
-    <Compile Include="ColorWarsGame\Controllers\PlayerKeyboardController.cs" />
+    <Compile Include="ColorWarsGame\Actors\ActorList.cs" />
+    <Compile Include="ColorWarsGame\Actors\KeyboardActor.cs" />
     <Compile Include="ColorWarsGame\Services\ColorTools.cs" />
     <Compile Include="ColorWarsGame\Graphics\FieldRenderer.cs" />
     <Compile Include="ColorWarsGame\Graphics\GameElementRenderer.cs" />
@@ -81,12 +82,12 @@
     <Compile Include="ColorWarsGame\Graphics\ScoreboardRenderer.cs" />
     <Compile Include="ColorWarsGame\Players\IPlayer.cs" />
     <Compile Include="ColorWarsGame\Players\MissingPlayer.cs" />
-    <Compile Include="ColorWarsGame\Players\Player.cs" />
+    <Compile Include="ColorWarsGame\Players\PlayerModel.cs" />
     <Compile Include="ColorWarsGame\Players\PlayerSettings.cs" />
     <Compile Include="ColorWarsGame\Players\PlayerStats.cs" />
-    <Compile Include="ColorWarsGame\Players\States\AttackingState.cs" />
-    <Compile Include="ColorWarsGame\Players\States\DefensiveState.cs" />
-    <Compile Include="ColorWarsGame\Players\States\IPlayerState.cs" />
+    <Compile Include="ColorWarsGame\PlayerControllers\States\AttackingState.cs" />
+    <Compile Include="ColorWarsGame\PlayerControllers\States\DefensiveState.cs" />
+    <Compile Include="ColorWarsGame\PlayerControllers\States\IPlayerState.cs" />
     <Compile Include="ColorWarsGame\Players\Tail.cs" />
     <Compile Include="ColorWarsGame\Services\PlayerServices.cs" />
     <Compile Include="ColorWarsGame\Program.cs" />

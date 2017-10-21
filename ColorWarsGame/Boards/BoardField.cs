@@ -24,10 +24,11 @@ namespace ColorWars.Boards
             this.Neighbours = new Dictionary<Direction, BoardField>();
         }
 
-        internal void OnPlayerEntered(Player player)
+        internal void OnPlayerEntered(PlayerModel player)
         {
             if (this.PlayerEntered != null)
                 this.PlayerEntered(player, new EventArgs());
+
         }
 
         public Point[] GetPoints()

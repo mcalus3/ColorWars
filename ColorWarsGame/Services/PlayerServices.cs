@@ -10,7 +10,7 @@ namespace ColorWars.Services
 {
     class PlayerServices
     {
-        public static void AddTerritory(Player player)
+        public static void AddTerritory(PlayerModel player)
         {
             List<BoardField> tailNeighbours = new List<BoardField>();
             List<BoardField> outerNeighbours = new List<BoardField>();
@@ -51,7 +51,7 @@ namespace ColorWars.Services
             }
         }
 
-        private static bool ClaimTerritoryAlgorithm(Player player, BoardField currentField, List<BoardField> outerNeighbours, List<BoardField> joinedArea)
+        private static bool ClaimTerritoryAlgorithm(PlayerModel player, BoardField currentField, List<BoardField> outerNeighbours, List<BoardField> joinedArea)
         {
             joinedArea.Add(currentField);
             if(currentField.Neighbours.Values.Any(f => f == null))

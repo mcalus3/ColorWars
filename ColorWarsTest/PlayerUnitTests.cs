@@ -6,28 +6,30 @@ using ColorWars.Services;
 using ColorWars.Players.States;
 using ColorWars.Players;
 using ColorWars.Boards;
+using System;
 
 namespace ColorWarsTest
 {
     [TestClass]
     public class PlayerUnitTest
     {
-        BoardField startField = new BoardField(Player.MISSING, new Point())
+        BoardField startField = new BoardField(MissingPlayer.Instance, new Point())
         {
             Neighbours = new Dictionary<Direction, BoardField>()
             {
                 {
                     Direction.UP,
-                    new BoardField(Player.MISSING, new Point())
+                    new BoardField(MissingPlayer.Instance, new Point())
                 }
             }
         };
+        private int killed;
 
         [TestMethod]
         public void MoveTest()
         {
             //set up
-            var player = new Player(new PlayerSettings(), startField);
+            var player = new PlayerModel(new Color(), startField);
             var endField = this.startField.Neighbours[Direction.UP];
             //test
             player.Move(Direction.UP);
@@ -39,14 +41,20 @@ namespace ColorWarsTest
         public void KillTest()
         {
             //set up
-            var player = new Player(new PlayerSettings(), startField);
-            var killer = new Player(new PlayerSettings(), startField);
+            var player = new PlayerModel(new Color(), startField);
+            var killer = new PlayerModel(new Color(), startField);
+            player.KilledEvent += this.OnKillHandler;
             //test
             player.Kill(killer);
-
+            
             Assert.IsTrue(player.Stats.Deaths == 1);
             Assert.IsTrue(killer.Stats.Kills == 1);
-            Assert.IsInstanceOfType(player.State, typeof(WaitingForRespawnState));
+            Assert.IsTrue(this.killed == 1);
+        }
+
+        private void OnKillHandler(object sender, EventArgs e)
+        {
+            this.killed++;
         }
     }
 }

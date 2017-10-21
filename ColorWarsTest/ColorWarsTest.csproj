@@ -51,12 +51,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ControllersFunctionalTest.cs" />
+    <Compile Include="ActorFunctionalTest.cs" />
     <Compile Include="BoardTest.cs" />
-    <Compile Include="PlayerMock.cs" />
+    <Compile Include="PlayerControllerMock.cs" />
     <Compile Include="PlayerFunctionalTest.cs" />
+    <Compile Include="PlayerServicesTest.cs" />
     <Compile Include="PlayerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScoreboardTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ColorWars.csproj">

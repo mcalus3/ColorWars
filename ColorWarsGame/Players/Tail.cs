@@ -14,9 +14,9 @@ namespace ColorWars.Players
     class Tail : ISquareDrawable
     {
         public List<BoardField> Positions {get; set;}
-        private Player owner;
+        private PlayerModel owner;
 
-        public Tail(Player owner)
+        public Tail(PlayerModel owner)
         {
             this.owner = owner;
             this.Positions = new List<BoardField>();
@@ -30,7 +30,7 @@ namespace ColorWars.Players
 
         private void PlayerEnteredHandler(object sender, EventArgs e)
         {
-            owner.Kill((Player)sender);
+            owner.Kill((PlayerModel)sender);
         }
 
         public void Delete()

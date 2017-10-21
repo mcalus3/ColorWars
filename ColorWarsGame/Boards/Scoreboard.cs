@@ -1,23 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using ColorWars.Players;
-using ColorWars.Graphics;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 
 namespace ColorWars.Boards
 {
     class Scoreboard
     {
-        public List<Player> Players { get; set; }
+        public List<PlayerModel> Players { get; set; }
         private GameBoard board;
         public int FieldCount;
 
-        public Scoreboard(List<Player> playerList, GameBoard board)
+        public Scoreboard(List<PlayerModel> playerList, GameBoard board)
         {
             this.Players = playerList;
             this.board = board;
