@@ -14,7 +14,7 @@ namespace ColorWars.Players
         public Color color;
         public int speed;
         public int deathPenalty;
-        public Dictionary<Direction, Keys> keyMapping = new Dictionary<Direction,Keys>();
+        public Dictionary<PlayerCommand, Keys> keyMapping = new Dictionary<PlayerCommand,Keys>();
 
     }
 }

@@ -65,6 +65,7 @@
     <Compile Include="ColorWarsGame\PlayerControllers\States\NotMovingState.cs" />
     <Compile Include="ColorWarsGame\PlayerControllers\States\WaitingForRespawnState.cs" />
     <Compile Include="ColorWarsGame\PlayerControllers\States\MovingState.cs" />
+    <Compile Include="ColorWarsGame\Services\PlayerCommand.cs" />
     <Compile Include="ColorWarsGame\Services\Direction.cs" />
     <Compile Include="ColorWarsGame\Boards\Scoreboard.cs" />
     <Compile Include="ColorWarsGame\ColorWarsGame.cs" />

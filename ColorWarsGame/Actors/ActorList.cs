@@ -22,7 +22,7 @@ namespace ColorWars.Actors
             KeyboardState state = Keyboard.GetState();
             foreach(KeyboardActor actor in this.Actors)
             {
-                actor.Execute(state);
+                actor.PollKeyboard(state);
             }
         }
 

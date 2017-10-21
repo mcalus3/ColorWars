@@ -17,12 +17,12 @@ namespace ColorWarsTest
         {
             var player = new PlayerControllerMock();
             var Actors = new ActorList();
-            var mapping = new Dictionary<Direction, Keys>(){ { Direction.UP, Keys.A } };
+            var mapping = new Dictionary<PlayerCommand, Keys>(){ { PlayerCommand.UP, Keys.A } };
             var kState = new KeyboardState(new Keys[] { Keys.A });
 
             Actors.Actors.Add(new KeyboardActor(mapping, player));
 
-            Actors.Actors[0].Execute(kState);
+            Actors.Actors[0].PollKeyboard(kState);
             Assert.IsTrue(player.dirChanged == 1);
 
             Actors.RemoveActor(player.Player);

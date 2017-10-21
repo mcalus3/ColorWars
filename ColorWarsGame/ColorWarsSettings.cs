@@ -20,10 +20,10 @@ namespace ColorWars
                 speed = 8,
                 deathPenalty = 150,
                 keyMapping = {
-                        { Direction.UP , Keys.W },
-                        {  Direction.DOWN, Keys.S },
-                        { Direction.LEFT, Keys.A },
-                        { Direction.RIGHT, Keys.D }
+                        { PlayerCommand.UP , Keys.W },
+                        {  PlayerCommand.DOWN, Keys.S },
+                        { PlayerCommand.LEFT, Keys.A },
+                        { PlayerCommand.RIGHT, Keys.D }
                     }
             },
             new PlayerSettings() {
@@ -31,10 +31,10 @@ namespace ColorWars
                 speed = 8,
                 deathPenalty = 150,
                 keyMapping = {
-                    { Direction.UP , Keys.Up },
-                    {  Direction.DOWN, Keys.Down },
-                    { Direction.LEFT, Keys.Left },
-                    { Direction.RIGHT, Keys.Right }
+                    { PlayerCommand.UP , Keys.Up },
+                    {  PlayerCommand.DOWN, Keys.Down },
+                    { PlayerCommand.LEFT, Keys.Left },
+                    { PlayerCommand.RIGHT, Keys.Right }
                 }
             },
             new PlayerSettings() {
@@ -42,10 +42,10 @@ namespace ColorWars
                 speed = 8,
                 deathPenalty = 150,
                 keyMapping = {
-                    { Direction.UP , Keys.I },
-                    {  Direction.DOWN, Keys.K },
-                    { Direction.LEFT, Keys.J },
-                    { Direction.RIGHT, Keys.L }
+                    { PlayerCommand.UP , Keys.I },
+                    {  PlayerCommand.DOWN, Keys.K },
+                    { PlayerCommand.LEFT, Keys.J },
+                    { PlayerCommand.RIGHT, Keys.L }
                 }
             },
             new PlayerSettings() {
@@ -53,10 +53,10 @@ namespace ColorWars
                 speed = 8,
                 deathPenalty = 150,
                 keyMapping = {
-                    { Direction.UP , Keys.NumPad8 },
-                    {  Direction.DOWN, Keys.NumPad5 },
-                    { Direction.LEFT, Keys.NumPad4 },
-                    { Direction.RIGHT, Keys.NumPad6 }
+                    { PlayerCommand.UP , Keys.NumPad8 },
+                    {  PlayerCommand.DOWN, Keys.NumPad5 },
+                    { PlayerCommand.LEFT, Keys.NumPad4 },
+                    { PlayerCommand.RIGHT, Keys.NumPad6 }
                 }
             }
         };
