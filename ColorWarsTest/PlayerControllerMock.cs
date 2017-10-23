@@ -1,15 +1,15 @@
-﻿using Microsoft.Xna.Framework;
-
-using ColorWars.Boards;
-using ColorWars.Services;
+﻿using ColorWars.Boards;
+using ColorWars.PlayerControllers;
 using ColorWars.Players;
+using ColorWars.Services;
+using Microsoft.Xna.Framework;
 
-namespace ColorWarsTest.Mocks
+namespace ColorWarsTest
 {
-    class PlayerControllerMock : PlayerController
+    internal class PlayerControllerMock : PlayerController
     {
-        public int moved;
-        public int dirChanged { get; private set; }
+        public int Moved;
+        public int DirChanged { get; private set; }
 
         public static PlayerModel GetPlayerModel()
         {
@@ -22,12 +22,12 @@ namespace ColorWarsTest.Mocks
 
         public new void Move(Direction direction)
         {
-            this.moved++;
+            this.Moved++;
         }
 
         public override void ChangeNextDirection(Direction direction)
         {
-            this.dirChanged++;
+            this.DirChanged++;
         }
     }
 }

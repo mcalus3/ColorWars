@@ -1,12 +1,12 @@
-﻿namespace ColorWars.Players.States
+﻿namespace ColorWars.PlayerControllers.States
 {
-    class WaitingForRespawnState : MovingState
+    internal class WaitingForRespawnState : MovingState
     {
-        private int RestoreTimer;
+        private int restoreTimer;
 
         public WaitingForRespawnState(PlayerController owner) : base(owner)
         {
-            this.RestoreTimer = owner.DeathPenalty;
+            this.restoreTimer = owner.DeathPenalty;
 
             owner.DeleteTail();
             owner.Field = owner.StartField;
@@ -14,11 +14,11 @@
 
         public override void OnUpdate()
         {
-            if(this.RestoreTimer == 0)
+            if(this.restoreTimer == 0)
             {
-                owner.MovingState = new DefensiveState(owner);
+                Owner.MovingState = new DefensiveState(Owner);
             }
-            this.RestoreTimer--;
+            this.restoreTimer--;
         }
     }
 }

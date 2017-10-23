@@ -2,7 +2,7 @@
 
 namespace ColorWars.Players
 {
-    class MissingPlayer : IPlayer
+    internal class MissingPlayer : IPlayer
     {
         public static readonly IPlayer Instance = new MissingPlayer();
 

@@ -5,16 +5,17 @@ using System.Collections.Generic;
 using ColorWars.Boards;
 using ColorWars.Players;
 using ColorWars.Services;
+using IDrawable = ColorWars.Services.IDrawable;
 
 namespace ColorWars.Graphics
 {
-    class ScoreboardRenderer : IDrawable
+    internal class ScoreboardRenderer : IDrawable
     {
-        private SpriteBatch sBatch;
-        private Scoreboard scoreboard;
-        private Dictionary<PlayerModel, Texture2D> playerTextures;
-        private GraphicsDeviceManager gManager;
-        private Texture2D blackTexture;
+        private readonly SpriteBatch sBatch;
+        private readonly Scoreboard scoreboard;
+        private readonly Dictionary<PlayerModel, Texture2D> playerTextures;
+        private readonly GraphicsDeviceManager gManager;
+        private readonly Texture2D blackTexture;
 
         public ScoreboardRenderer(GraphicsDeviceManager gdManager, Scoreboard scoreboard, SpriteBatch sBatch)
         {

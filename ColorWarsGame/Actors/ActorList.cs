@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ColorWars.Actors
 {
-    class ActorList
+    internal class ActorList
     {
         public List<KeyboardActor> Actors { get; set; }
 

@@ -5,28 +5,28 @@ using Microsoft.Xna.Framework;
 using ColorWars.Services;
 using ColorWars.Players;
 using ColorWars.Boards;
-using ColorWars.Players.States;
+using ColorWars.PlayerControllers;
+using ColorWars.PlayerControllers.States;
 
 namespace ColorWarsTest
 {
     [TestClass]
     public class PlayerFunctionalTest
     {
-        private BoardField[,] testBoard = BoardTest.CreateTestMap().Board;
+        private readonly BoardField[,] testBoard = BoardTest.CreateTestMap().Board;
 
         [TestMethod]
         public void NotMoveWhileDeadTest()
         {
             //set up
             var startField = new BoardField(MissingPlayer.Instance, new Point());
-            var settings = new PlayerSettings() { speed = 0 };
             var player = new PlayerModel(new Color(), startField);
             var controller = new PlayerController(player, startField, 0, 0);
             controller.MovingState = new WaitingForRespawnState(controller);
             //test
             Assert.IsTrue(player.Position == startField);
 
-            controller.ChangeNextDirection(Direction.UP);
+            controller.ChangeNextDirection(Direction.Up);
             controller.Update();
 
             Assert.IsTrue(player.Position == startField);
@@ -38,19 +38,18 @@ namespace ColorWarsTest
             //set up
             var startField = new BoardField(MissingPlayer.Instance, new Point(0,1));
             var endField = new BoardField(MissingPlayer.Instance, new Point(0,0));
-            startField.Neighbours.Add(Direction.UP, endField);
-            var settings = new PlayerSettings() { speed = 0 };
+            startField.Neighbours.Add(Direction.Up, endField);
             var player = new PlayerModel(new Color(), startField);
             var controller = new PlayerController(player, startField, 0, 0);
             //test
-            Assert.IsTrue(player.Direction == Direction.NONE);
+            Assert.IsTrue(player.Direction == Direction.None);
 
             controller.Update();
             Assert.IsTrue(player.Position == startField);
 
-            controller.ChangeNextDirection(Direction.UP);
+            controller.ChangeNextDirection(Direction.Up);
             controller.Update();
-            Assert.IsTrue(player.Direction == Direction.UP);
+            Assert.IsTrue(player.Direction == Direction.Up);
             Assert.IsTrue(player.Position == endField);
         }
 
@@ -60,19 +59,19 @@ namespace ColorWarsTest
             //set up
             var startField = new BoardField(MissingPlayer.Instance, new Point(0, 1));
             var endField = new BoardField(MissingPlayer.Instance, new Point(0, 0));
-            startField.Neighbours.Add(Direction.UP, endField);
+            startField.Neighbours.Add(Direction.Up, endField);
             var player = new PlayerModel(new Color(), startField);
             var controller = new PlayerController(player, startField, 0, 0);
-            player.Direction = Direction.UP;
+            player.Direction = Direction.Up;
             controller.MovingState = new DefensiveState(controller);
 
             //test
-            controller.ChangeNextDirection(Direction.LEFT);
-            Assert.IsTrue(player.Direction == Direction.UP);
+            controller.ChangeNextDirection(Direction.Left);
+            Assert.IsTrue(player.Direction == Direction.Up);
             //player will go up because that is his buffered direction and then change it to left
             controller.Update();
 
-            Assert.IsTrue(player.Direction == Direction.LEFT);
+            Assert.IsTrue(player.Direction == Direction.Left);
         }
 
         [TestMethod]
@@ -82,18 +81,16 @@ namespace ColorWarsTest
             var startField = new BoardField(MissingPlayer.Instance, new Point(0, 2));
             var midField = new BoardField(MissingPlayer.Instance, new Point(0, 1));
             var endField = new BoardField(MissingPlayer.Instance, new Point(0, 0));
-            startField.Neighbours.Add(Direction.UP, midField);
-            midField.Neighbours.Add(Direction.UP, endField);
+            startField.Neighbours.Add(Direction.Up, midField);
+            midField.Neighbours.Add(Direction.Up, endField);
 
-            var settings = new PlayerSettings() { speed = 0 };
             var player = new PlayerModel(new Color(), startField);
             var controller = new PlayerController(player, startField, 0, 0);
 
             startField.Owner = player;
 
-            var expectedTailFields = new BoardField[] { midField };
             //test
-            controller.ChangeNextDirection(Direction.UP);
+            controller.ChangeNextDirection(Direction.Up);
             controller.Update();
             controller.Update();
 
@@ -134,10 +131,9 @@ namespace ColorWarsTest
                 fields[3, 0]
             };
 
-            var settings = new PlayerSettings() { speed = 0 };
             var player = new PlayerModel(new Color(), fields[0,2]);
             var controller = new PlayerController(player, fields[0, 2], 0, 0);
-            controller.ChangeNextDirection(Direction.RIGHT);
+            controller.ChangeNextDirection(Direction.Right);
             //player.State = new AttackingState(player);
 
             fields[1,2].Owner = player;
@@ -167,13 +163,12 @@ namespace ColorWarsTest
             //set up
             BoardField[,] fields = this.testBoard;
 
-            var settings = new PlayerSettings() { speed = 0 };
             var killed = new PlayerModel(new Color(), fields[0, 2]);
             var killer = new PlayerModel(new Color(), fields[1, 2]);
             var killedController = new PlayerController(killed, fields[0, 2], 0, 0);
             var killerController = new PlayerController(killer, fields[1, 2], 0, 0);
-            killedController.ChangeNextDirection(Direction.UP);
-            killerController.ChangeNextDirection(Direction.LEFT);
+            killedController.ChangeNextDirection(Direction.Up);
+            killerController.ChangeNextDirection(Direction.Left);
 
             Assert.IsTrue(killer.Stats.Kills == 0);
             Assert.IsTrue(killer.Stats.Deaths == 0);

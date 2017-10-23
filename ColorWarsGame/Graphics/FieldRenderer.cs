@@ -5,7 +5,7 @@ using ColorWars.Services;
 
 namespace ColorWars.Graphics
 {
-    class FieldRenderer : GameElementRenderer
+    internal class FieldRenderer : GameElementRenderer
     {
         public FieldRenderer(GraphicsDeviceManager gdManager, ISquareDrawable drawedObject, Point mapDimension, SpriteBatch sBatch)
             : base(gdManager, drawedObject, mapDimension, sBatch)
@@ -17,7 +17,7 @@ namespace ColorWars.Graphics
             //for every field that rendered object is occupying write a rectangle covering whole field
             foreach (Point field in base.RenderedObject.GetPoints())
             {
-                base.spriteBatch.Draw(base.Texture, base.GetRectangleFromField(field), base.RenderedObject.GetColor());
+                base.SpriteBatch.Draw(base.Texture, base.GetRectangleFromField(field), base.RenderedObject.GetColor());
             }
         }
     }

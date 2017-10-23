@@ -1,6 +1,6 @@
-﻿namespace ColorWars.Players.States
+﻿namespace ColorWars.PlayerControllers.States
 {
-    class DefensiveState : MovingState
+    internal class DefensiveState : MovingState
     {
         public DefensiveState(PlayerController owner) : base(owner)
         {
@@ -8,9 +8,9 @@
 
         public override void OnUpdate()
         {
-            if(!owner.OnOwnTerritory)
+            if(!Owner.OnOwnTerritory)
             {
-                this.owner.MovingState = new AttackingState(this.owner);
+                this.Owner.MovingState = new AttackingState(this.Owner);
             }
             base.OnUpdate();
         }

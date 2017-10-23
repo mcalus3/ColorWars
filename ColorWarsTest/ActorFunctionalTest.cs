@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Input;
 
 using ColorWars.Services;
 using ColorWars.Actors;
-using ColorWarsTest.Mocks;
 
 namespace ColorWarsTest
 {
@@ -15,17 +14,17 @@ namespace ColorWarsTest
         public void CreateUseAndRemoveActorTest()
         {
             var player = new PlayerControllerMock();
-            var Actors = new ActorList();
-            var mapping = new Dictionary<PlayerCommand, Keys>(){ { PlayerCommand.UP, Keys.A } };
-            var kState = new KeyboardState(new Keys[] { Keys.A });
+            var actors = new ActorList();
+            var mapping = new Dictionary<PlayerCommand, Keys> { { PlayerCommand.Up, Keys.A } };
+            var kState = new KeyboardState(Keys.A);
 
-            Actors.Actors.Add(new KeyboardActor(mapping, player));
+            actors.Actors.Add(new KeyboardActor(mapping, player));
 
-            Actors.Actors[0].PollKeyboard(kState);
-            Assert.IsTrue(player.dirChanged == 1);
+            actors.Actors[0].PollKeyboard(kState);
+            Assert.IsTrue(player.DirChanged == 1);
 
-            Actors.RemoveActor(player.Player);
-            Assert.IsTrue(Actors.Actors.Count == 0);
+            actors.RemoveActor(player.Player);
+            Assert.IsTrue(actors.Actors.Count == 0);
         }
     }
 }

@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using ColorWars.PlayerControllers;
 using Microsoft.Xna.Framework.Input;
 
-using ColorWars.Players;
 using ColorWars.Services;
 
 namespace ColorWars.Actors
 {
-    class KeyboardActor
+    internal class KeyboardActor
     {
         internal PlayerController Player { get; set; }
-        private Dictionary<PlayerCommand, Keys> mapping;
+        private readonly Dictionary<PlayerCommand, Keys> mapping;
 
         public KeyboardActor(Dictionary<PlayerCommand, Keys> mapping, PlayerController player)
         {
@@ -32,21 +33,23 @@ namespace ColorWars.Actors
         {
             switch (command)
             {
-                case PlayerCommand.UP:
-                    this.Player.ChangeNextDirection(Direction.UP);
+                case PlayerCommand.Up:
+                    this.Player.ChangeNextDirection(Direction.Up);
                     break;
 
-                case PlayerCommand.DOWN:
-                    this.Player.ChangeNextDirection(Direction.DOWN);
+                case PlayerCommand.Down:
+                    this.Player.ChangeNextDirection(Direction.Down);
                     break;
 
-                case PlayerCommand.LEFT:
-                    this.Player.ChangeNextDirection(Direction.LEFT);
+                case PlayerCommand.Left:
+                    this.Player.ChangeNextDirection(Direction.Left);
                     break;
 
-                case PlayerCommand.RIGHT:
-                    this.Player.ChangeNextDirection(Direction.RIGHT);
+                case PlayerCommand.Right:
+                    this.Player.ChangeNextDirection(Direction.Right);
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(command), command, null);
             }
         }
     }

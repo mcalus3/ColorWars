@@ -6,12 +6,12 @@ using ColorWars.Services;
 
 namespace ColorWars.Players
 {
-    class PlayerSettings
+    internal class PlayerSettings
     {
-        public Color color;
-        public int speed;
-        public int deathPenalty;
-        public Dictionary<PlayerCommand, Keys> keyMapping = new Dictionary<PlayerCommand,Keys>();
+        public Color Color;
+        public int Speed;
+        public int DeathPenalty;
+        public Dictionary<PlayerCommand, Keys> KeyMapping = new Dictionary<PlayerCommand,Keys>();
 
     }
 }

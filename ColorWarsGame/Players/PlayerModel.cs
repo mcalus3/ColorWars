@@ -6,7 +6,7 @@ using ColorWars.Services;
 
 namespace ColorWars.Players
 {
-    class PlayerModel : IPlayer, ISquareDrawable
+    internal class PlayerModel : IPlayer, ISquareDrawable
     {
         public event EventHandler TerritoryAddedEvent;
         public event EventHandler KilledEvent;
@@ -22,7 +22,7 @@ namespace ColorWars.Players
         {
             this.Color = color;
             this.Position = startField;
-            this.Direction = Direction.NONE;
+            this.Direction = Direction.None;
             this.Tail = new Tail(this);
             this.Stats = new PlayerStats();
         }
@@ -44,7 +44,7 @@ namespace ColorWars.Players
 
         public void Kill(PlayerModel killer)
         {
-            this.onKill(killer);
+            this.OnKill(killer);
             if(killer != this)
             {
                 this.Stats.Deaths++;
@@ -67,7 +67,7 @@ namespace ColorWars.Players
             this.TerritoryAddedEvent?.Invoke(this, new EventArgs());
         }
 
-        private void onKill(PlayerModel killer)
+        private void OnKill(PlayerModel killer)
         {
             this.KilledEvent?.Invoke(killer, new EventArgs());
         }

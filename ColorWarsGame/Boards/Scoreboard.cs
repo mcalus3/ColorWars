@@ -5,17 +5,16 @@ using ColorWars.Players;
 
 namespace ColorWars.Boards
 {
-    class Scoreboard
+    internal class Scoreboard
     {
         public List<PlayerModel> Players { get; set; }
-        private GameBoard board;
-        public int FieldCount;
+        private readonly GameBoard board;
+        public int FieldCount => this.board.Board.Length;
 
         public Scoreboard(List<PlayerModel> playerList, GameBoard board)
         {
             this.Players = playerList;
             this.board = board;
-            this.FieldCount = this.board.Board.Length;
         }
 
         public void Update(object sender, EventArgs e)

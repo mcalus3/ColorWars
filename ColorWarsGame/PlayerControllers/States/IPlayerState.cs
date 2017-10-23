@@ -1,6 +1,6 @@
-﻿namespace ColorWars.Players.States
+﻿namespace ColorWars.PlayerControllers.States
 {
-    interface IPlayerState
+    internal interface IPlayerState
     {
         void OnUpdate();
     }

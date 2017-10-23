@@ -1,43 +1,43 @@
 ﻿using ColorWars.Services;
 
-namespace ColorWars.Players.States
+namespace ColorWars.PlayerControllers.States
 {
-    abstract class MovingState : IPlayerState
+    internal abstract class MovingState : IPlayerState
     {
-        internal PlayerController owner;
-        internal Direction direction { get; set; }
+        internal PlayerController Owner;
+        internal Direction Direction { get; set; }
         protected int MoveTimer { get; set; }
 
-        public MovingState(PlayerController owner)
+        protected MovingState(PlayerController owner)
         {
-            this.owner = owner;
+            this.Owner = owner;
         }
 
         public virtual void OnUpdate()
         {
-            if(this.MoveTimer != owner.PlayerSpeed)
+            if(this.MoveTimer != Owner.PlayerSpeed)
             {
                 this.MoveTimer++;
             }
             else
             {
                 this.MoveTimer = 0;
-                owner.Move(owner.Direction);
+                Owner.Move(Owner.Direction);
 
-                if(owner.Field == null)
+                if(Owner.Field == null)
                 {
-                    owner.Suicide();
+                    Owner.Suicide();
                 }
 
-                owner.InvokeOnPlayerEntered();
-                owner.Direction = owner.BufferedDirection;
+                Owner.InvokeOnPlayerEntered();
+                Owner.Direction = Owner.BufferedDirection;
             }
-            this.owner.MovementFraction = (float)this.MoveTimer / this.owner.PlayerSpeed;
+            this.Owner.MovementFraction = (float)this.MoveTimer / this.Owner.PlayerSpeed;
         }
 
         public virtual void ChangeDirection(Direction direction)
         {
-            this.owner.BufferedDirection = direction;
+            this.Owner.BufferedDirection = direction;
         }
     }
 }

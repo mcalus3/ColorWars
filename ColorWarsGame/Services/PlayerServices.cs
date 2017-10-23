@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ColorWars.Services
 {
-    class PlayerServices
+    internal class PlayerServices
     {
         public static void AddTerritory(PlayerModel player)
         {
@@ -57,34 +57,34 @@ namespace ColorWars.Services
                 return false;
             }
             //For each of neighbours thatarent in joined area list and does not belong to player make recurrent call
-            bool EachNeighbourReturnsTrue = true;
+            bool eachNeighbourReturnsTrue = true;
             foreach(BoardField neighbour in currentField.Neighbours.Values)
             {
                 if(neighbour.Owner != player && !joinedArea.Contains(neighbour))
                 {
                     if(!ClaimTerritoryAlgorithm(player, neighbour, outerNeighbours, joinedArea))
                     {
-                        EachNeighbourReturnsTrue = false;
+                        eachNeighbourReturnsTrue = false;
                     }
                 }
             }
-            return EachNeighbourReturnsTrue;
+            return eachNeighbourReturnsTrue;
         }
 
         public static Direction ReversedDirection(Direction direction)
         {
             switch(direction)
             {
-                case Direction.UP:
-                    return Direction.DOWN;
-                case Direction.DOWN:
-                    return Direction.UP;
-                case Direction.LEFT:
-                    return Direction.RIGHT;
-                case Direction.RIGHT:
-                    return Direction.LEFT;
+                case Direction.Up:
+                    return Direction.Down;
+                case Direction.Down:
+                    return Direction.Up;
+                case Direction.Left:
+                    return Direction.Right;
+                case Direction.Right:
+                    return Direction.Left;
                 default:
-                    return Direction.NONE;
+                    return Direction.None;
             }
         }
     }

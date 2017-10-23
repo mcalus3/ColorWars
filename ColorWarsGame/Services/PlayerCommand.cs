@@ -1,10 +1,10 @@
 ﻿namespace ColorWars.Services
 {
-    enum PlayerCommand
+    internal enum PlayerCommand
     {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
+        Up,
+        Down,
+        Left,
+        Right
     }
 }

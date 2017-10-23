@@ -1,6 +1,6 @@
 ﻿namespace ColorWars.Players
 {
-    class PlayerStats
+    internal class PlayerStats
     {
         public int Kills { get; set; }
         public int Deaths { get; set; }

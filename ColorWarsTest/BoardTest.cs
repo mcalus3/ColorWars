@@ -10,7 +10,7 @@ namespace ColorWarsTest
     [TestClass]
     public class BoardTest
     {
-        GameBoard gameBoard = BoardTest.CreateTestMap();
+        private readonly GameBoard gameBoard = BoardTest.CreateTestMap();
 
         internal static GameBoard CreateTestMap()
         {
@@ -32,8 +32,8 @@ namespace ColorWarsTest
         {
             BoardField[,] fields = BoardTest.CreateTestMap().Board;
             Assert.IsTrue(fields.Length == 12);
-            Assert.IsTrue(fields[0,0].Neighbours[Direction.UP] == null);
-            Assert.IsTrue(fields[0,0].Neighbours[Direction.DOWN] == fields[0,1]);
+            Assert.IsTrue(fields[0,0].Neighbours[Direction.Up] == null);
+            Assert.IsTrue(fields[0,0].Neighbours[Direction.Down] == fields[0,1]);
         }
 
         [TestMethod]
@@ -54,10 +54,10 @@ namespace ColorWarsTest
             foreach (Point point in points)
             Assert.IsTrue(board.Board[point.X, point.Y].Position == point);
 
-            Assert.IsTrue(board.Board[0, 0].Neighbours[Direction.DOWN] == board.Board[0, 1]);
-            Assert.IsTrue(board.Board[0, 0].Neighbours[Direction.RIGHT] == board.Board[1, 0]);
-            Assert.IsTrue(board.Board[0, 0].Neighbours[Direction.LEFT] == null);
-            Assert.IsTrue(board.Board[0, 0].Neighbours[Direction.UP] == null);
+            Assert.IsTrue(board.Board[0, 0].Neighbours[Direction.Down] == board.Board[0, 1]);
+            Assert.IsTrue(board.Board[0, 0].Neighbours[Direction.Right] == board.Board[1, 0]);
+            Assert.IsTrue(board.Board[0, 0].Neighbours[Direction.Left] == null);
+            Assert.IsTrue(board.Board[0, 0].Neighbours[Direction.Up] == null);
         }
 
         [TestMethod]

@@ -6,24 +6,25 @@ using ColorWars.Players;
 using ColorWars.Boards;
 
 using ColorWars.Services;
+using IDrawable = ColorWars.Services.IDrawable;
 
 namespace ColorWars.Graphics
 {
-    class GameRenderer
+    internal class GameRenderer
     {
         public List<IDrawable> Renderers {get; set;}
         public GraphicsDeviceManager Graphics{get; set;}
-        public List<PlayerRenderer> PlayerRenderers { get; private set; }
+        public List<PlayerRenderer> PlayerRenderers { get; }
 
-        private Point mapDimension;
+        private readonly Point mapDimension;
         private SpriteBatch sBatch;
 
         public GameRenderer(GraphicsDeviceManager gManager, ColorWarsSettings settings)
         {
             this.Graphics = gManager;
-            this.Graphics.PreferredBackBufferWidth = settings.windowSize.X;
-            this.Graphics.PreferredBackBufferHeight = settings.windowSize.Y;
-            this.mapDimension = settings.mapDimension;
+            this.Graphics.PreferredBackBufferWidth = settings.WindowSize.X;
+            this.Graphics.PreferredBackBufferHeight = settings.WindowSize.Y;
+            this.mapDimension = settings.MapDimension;
 
             this.Renderers = new List<IDrawable>();
             this.PlayerRenderers = new List<PlayerRenderer>();

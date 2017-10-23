@@ -1,11 +1,11 @@
 ﻿namespace ColorWars.Services
 {
-    enum Direction
+    internal enum Direction
     {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT,
-        NONE
+        Up,
+        Down,
+        Left,
+        Right,
+        None
     }
 }

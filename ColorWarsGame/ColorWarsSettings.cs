@@ -6,57 +6,57 @@ using ColorWars.Services;
 
 namespace ColorWars
 {
-    class ColorWarsSettings
+    internal class ColorWarsSettings
     {
-        public Point windowSize = new Point(800, 600);
-        public Point mapDimension = new Point(30, 30);
-        public int startingTerritorySize = 2;
-        public int endTime = 100;
+        public Point WindowSize = new Point(800, 600);
+        public Point MapDimension = new Point(30, 30);
+        public int StartingTerritorySize = 2;
+        public int EndTime = 100;
 
-        public int playersCount = 4;
-        public PlayerSettings[] players = new PlayerSettings[] {
+        public int PlayersCount = 4;
+        public PlayerSettings[] Players = new PlayerSettings[] {
             new PlayerSettings() {
-                color = new Color(0,220,20,255),
-                speed = 8,
-                deathPenalty = 150,
-                keyMapping = {
-                        { PlayerCommand.UP , Keys.W },
-                        {  PlayerCommand.DOWN, Keys.S },
-                        { PlayerCommand.LEFT, Keys.A },
-                        { PlayerCommand.RIGHT, Keys.D }
+                Color = new Color(0,220,20,255),
+                Speed = 8,
+                DeathPenalty = 150,
+                KeyMapping = {
+                        { PlayerCommand.Up , Keys.W },
+                        {  PlayerCommand.Down, Keys.S },
+                        { PlayerCommand.Left, Keys.A },
+                        { PlayerCommand.Right, Keys.D }
                     }
             },
             new PlayerSettings() {
-                color = new Color(230,0,50,255),
-                speed = 8,
-                deathPenalty = 150,
-                keyMapping = {
-                    { PlayerCommand.UP , Keys.Up },
-                    {  PlayerCommand.DOWN, Keys.Down },
-                    { PlayerCommand.LEFT, Keys.Left },
-                    { PlayerCommand.RIGHT, Keys.Right }
+                Color = new Color(230,0,50,255),
+                Speed = 8,
+                DeathPenalty = 150,
+                KeyMapping = {
+                    { PlayerCommand.Up , Keys.Up },
+                    {  PlayerCommand.Down, Keys.Down },
+                    { PlayerCommand.Left, Keys.Left },
+                    { PlayerCommand.Right, Keys.Right }
                 }
             },
             new PlayerSettings() {
-                color = new Color(200,165,0,255),
-                speed = 8,
-                deathPenalty = 150,
-                keyMapping = {
-                    { PlayerCommand.UP , Keys.I },
-                    {  PlayerCommand.DOWN, Keys.K },
-                    { PlayerCommand.LEFT, Keys.J },
-                    { PlayerCommand.RIGHT, Keys.L }
+                Color = new Color(200,165,0,255),
+                Speed = 8,
+                DeathPenalty = 150,
+                KeyMapping = {
+                    { PlayerCommand.Up , Keys.I },
+                    {  PlayerCommand.Down, Keys.K },
+                    { PlayerCommand.Left, Keys.J },
+                    { PlayerCommand.Right, Keys.L }
                 }
             },
             new PlayerSettings() {
-                color = new Color(40,0,200,255),
-                speed = 8,
-                deathPenalty = 150,
-                keyMapping = {
-                    { PlayerCommand.UP , Keys.NumPad8 },
-                    {  PlayerCommand.DOWN, Keys.NumPad5 },
-                    { PlayerCommand.LEFT, Keys.NumPad4 },
-                    { PlayerCommand.RIGHT, Keys.NumPad6 }
+                Color = new Color(40,0,200,255),
+                Speed = 8,
+                DeathPenalty = 150,
+                KeyMapping = {
+                    { PlayerCommand.Up , Keys.NumPad8 },
+                    {  PlayerCommand.Down, Keys.NumPad5 },
+                    { PlayerCommand.Left, Keys.NumPad4 },
+                    { PlayerCommand.Right, Keys.NumPad6 }
                 }
             }
         };

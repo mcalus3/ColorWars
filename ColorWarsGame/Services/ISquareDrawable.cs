@@ -2,7 +2,7 @@
 
 namespace ColorWars.Services
 {
-    interface ISquareDrawable
+    internal interface ISquareDrawable
     {
         Point[] GetPoints();
         Color GetColor();

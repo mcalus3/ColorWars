@@ -1,8 +1,8 @@
 ﻿using ColorWars.Services;
 
-namespace ColorWars.Players.States
+namespace ColorWars.PlayerControllers.States
 {
-    class NotMovingState : MovingState, IPlayerState
+    internal class NotMovingState : MovingState
     {
         public NotMovingState(PlayerController owner) : base(owner)
         {
@@ -10,9 +10,9 @@ namespace ColorWars.Players.States
 
         public override void ChangeDirection(Direction direction)
         {
-            owner.Direction = direction;
+            Owner.Direction = direction;
             base.ChangeDirection(direction);
-            owner.MovingState = new DefensiveState(owner);
+            Owner.MovingState = new DefensiveState(Owner);
         }
 
         public override void OnUpdate()

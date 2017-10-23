@@ -7,27 +7,28 @@ using ColorWars.Players;
 using ColorWars.Boards;
 using ColorWars.Graphics;
 using ColorWars.Actors;
+using ColorWars.PlayerControllers;
 using ColorWars.Services;
 
 
 namespace ColorWars
 {
-    class ColorWarsGame : Game
+    internal class ColorWarsGame : Game
     {
-        private ColorWarsSettings settings;
-        private List<PlayerModel> playerList;
-        private List<PlayerController> playerControllersList;
-        private GameBoard gameBoard;
-        private GameRenderer gameRenderer;
-        private ActorList gameActors;
-        private Scoreboard scoreboard;
+        private readonly ColorWarsSettings settings;
+        private readonly List<PlayerModel> playerList;
+        private readonly List<PlayerController> playerControllersList;
+        private readonly GameBoard gameBoard;
+        private readonly GameRenderer gameRenderer;
+        private readonly ActorList gameActors;
+        private readonly Scoreboard scoreboard;
 
         public ColorWarsGame(ColorWarsSettings settings)
         {
             this.settings = settings;
             this.playerList = new List<PlayerModel>();
             this.playerControllersList = new List<PlayerController>();
-            this.gameBoard = new GameBoard(this.settings.startingTerritorySize, this.settings.mapDimension);
+            this.gameBoard = new GameBoard(this.settings.StartingTerritorySize, this.settings.MapDimension);
             this.gameRenderer = new GameRenderer(new GraphicsDeviceManager(this), this.settings);
             this.gameActors = new ActorList();
             this.scoreboard = new Scoreboard(this.playerList, this.gameBoard);
@@ -48,14 +49,14 @@ namespace ColorWars
         {
             BoardField[] startFields = this.gameBoard.GetStartFields();
 
-            for (var i = 0; i < this.settings.playersCount; i++)
+            for (var i = 0; i < this.settings.PlayersCount; i++)
             {
-                PlayerSettings playerSettings = this.settings.players[i];
-                var newPlayer = new PlayerModel(playerSettings.color, startFields[i]);
+                PlayerSettings playerSettings = this.settings.Players[i];
+                var newPlayer = new PlayerModel(playerSettings.Color, startFields[i]);
                 this.playerList.Add(newPlayer);
-                var controller = new PlayerController(newPlayer, startFields[i], playerSettings.speed, playerSettings.deathPenalty);
+                var controller = new PlayerController(newPlayer, startFields[i], playerSettings.Speed, playerSettings.DeathPenalty);
                 this.playerControllersList.Add(controller);
-                this.gameActors.Actors.Add(new KeyboardActor(playerSettings.keyMapping, controller));
+                this.gameActors.Actors.Add(new KeyboardActor(playerSettings.KeyMapping, controller));
                 newPlayer.TerritoryAddedEvent += this.scoreboard.Update;
             }
         }
@@ -73,7 +74,7 @@ namespace ColorWars
         protected override void Update(GameTime gameTime)
         {
             //Check for endGame
-            if ((int)gameTime.TotalGameTime.TotalSeconds >= this.settings.endTime)
+            if ((int)gameTime.TotalGameTime.TotalSeconds >= this.settings.EndTime)
             {
                 WaitForKeyAndExit();
                 return;

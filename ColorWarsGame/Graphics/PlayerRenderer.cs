@@ -6,12 +6,12 @@ using ColorWars.Services;
 
 namespace ColorWars.Graphics
 {
-    class PlayerRenderer : GameElementRenderer
+    internal class PlayerRenderer : GameElementRenderer
     {
         internal PlayerModel RenderedPlayer { get; set; }
 
         public PlayerRenderer(GraphicsDeviceManager gdManager, PlayerModel drawedObject, Point mapDimension, SpriteBatch sBatch)
-            : base(gdManager, (ISquareDrawable)drawedObject, mapDimension, sBatch)
+            : base(gdManager, drawedObject, mapDimension, sBatch)
         {
             this.RenderedPlayer = drawedObject;
         }
@@ -21,7 +21,7 @@ namespace ColorWars.Graphics
             //for every field that rendered object is occupying write a rectangle covering whole field
             foreach (Point field in this.RenderedPlayer.GetPoints())
             {
-                base.spriteBatch.Draw(base.Texture, this.GetPlayerLocation(base.GetRectangleFromField(field)), base.RenderedObject.GetColor());
+                base.SpriteBatch.Draw(base.Texture, this.GetPlayerLocation(base.GetRectangleFromField(field)), base.RenderedObject.GetColor());
             }
         }
 
@@ -35,19 +35,19 @@ namespace ColorWars.Graphics
 
             switch (this.RenderedPlayer.Direction)
             {
-                case Direction.UP:
+                case Direction.Up:
                     newY -= differenceY;
                     break;
-                case Direction.DOWN:
+                case Direction.Down:
                     newY += differenceY;
                     break;
-                case Direction.LEFT:
+                case Direction.Left:
                     newX -= differenceX;
                     break;
-                case Direction.RIGHT:
+                case Direction.Right:
                     newX += differenceX;
                     break;
-                case Direction.NONE:
+                case Direction.None:
                     break;
             }
             return new Rectangle(newX, newY, rectangle.Width, rectangle.Height);

@@ -1,6 +1,6 @@
-﻿namespace ColorWars.Graphics
+﻿namespace ColorWars.Services
 {
-    interface IDrawable
+    internal interface IDrawable
     {
         void Draw();
     }

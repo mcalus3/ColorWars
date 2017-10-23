@@ -7,7 +7,7 @@ using ColorWars.Services;
 
 namespace ColorWars.Boards
 {
-    class BoardField : ISquareDrawable
+    internal class BoardField : ISquareDrawable
     {
         public Point Position { get; set; }
         public IPlayer Owner { get; set; }
@@ -23,9 +23,7 @@ namespace ColorWars.Boards
 
         internal void OnPlayerEntered(PlayerModel player)
         {
-            if (this.PlayerEntered != null)
-                this.PlayerEntered(player, new EventArgs());
-
+            PlayerEntered?.Invoke(player, new EventArgs());
         }
 
         public Point[] GetPoints()

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Xna.Framework;
 using System.Linq;
 
 using ColorWars.Players;
@@ -6,10 +7,10 @@ using ColorWars.Services;
 
 namespace ColorWars.Boards
 {
-    class GameBoard
+    internal class GameBoard
     {
         public BoardField[,] Board { get; set; }
-        private int startingTerritorySize;
+        private readonly int startingTerritorySize;
         private Point dimension;
 
         public GameBoard(int startingTerritorySize, Point dimension)
@@ -52,16 +53,17 @@ namespace ColorWars.Boards
             if (cords.X < this.dimension.X - 1)
                 rightNeighbor = this.Board[cords.X + 1, cords.Y];
 
-            field.Neighbours[Direction.UP] = upperNeighbor;
-            field.Neighbours[Direction.DOWN] = lowerNeighbor;
-            field.Neighbours[Direction.LEFT] = leftNeighbor;
-            field.Neighbours[Direction.RIGHT] = rightNeighbor;
+            field.Neighbours[Direction.Up] = upperNeighbor;
+            field.Neighbours[Direction.Down] = lowerNeighbor;
+            field.Neighbours[Direction.Left] = leftNeighbor;
+            field.Neighbours[Direction.Right] = rightNeighbor;
         }
 
         public BoardField[] GetStartFields()
         {
             var fields = new BoardField[]
             {
+                //convert to floor int
                 this.Board[(int)(this.dimension.X/4), (int)(this.dimension.Y/4)],
                 this.Board[(int)(this.dimension.X*3/4), (int)(this.dimension.Y*3/4)],
                 this.Board[(int)(this.dimension.X*3/4), (int)(this.dimension.Y/4)],
@@ -107,7 +109,7 @@ namespace ColorWars.Boards
         {
             foreach (PlayerModel player in players)
             {
-                player.Stats.Territory = this.Board.Cast<BoardField>().Where(f => f.Owner == player).Count();
+                player.Stats.Territory = this.Board.Cast<BoardField>().Count(f => f.Owner == player);
             }
         }
     }

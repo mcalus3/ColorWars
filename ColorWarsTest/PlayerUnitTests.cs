@@ -12,12 +12,12 @@ namespace ColorWarsTest
     [TestClass]
     public class PlayerUnitTest
     {
-        BoardField startField = new BoardField(MissingPlayer.Instance, new Point())
+        private readonly BoardField startField = new BoardField(MissingPlayer.Instance, new Point())
         {
             Neighbours = new Dictionary<Direction, BoardField>()
             {
                 {
-                    Direction.UP,
+                    Direction.Up,
                     new BoardField(MissingPlayer.Instance, new Point())
                 }
             }
@@ -29,9 +29,9 @@ namespace ColorWarsTest
         {
             //set up
             var player = new PlayerModel(new Color(), startField);
-            var endField = this.startField.Neighbours[Direction.UP];
+            var endField = this.startField.Neighbours[Direction.Up];
             //test
-            player.Move(Direction.UP);
+            player.Move(Direction.Up);
 
             Assert.IsTrue(player.Position == endField);
         }

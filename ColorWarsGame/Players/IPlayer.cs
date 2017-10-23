@@ -2,7 +2,7 @@
 
 namespace ColorWars.Players
 {
-    interface IPlayer
+    internal interface IPlayer
     {
         Color GetColor();
     }

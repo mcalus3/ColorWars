@@ -8,10 +8,10 @@ using ColorWars.Boards;
 
 namespace ColorWars.Players
 {
-    class Tail : ISquareDrawable
+    internal class Tail : ISquareDrawable
     {
         public List<BoardField> Positions {get; set;}
-        private PlayerModel owner;
+        private readonly PlayerModel owner;
 
         public Tail(PlayerModel owner)
         {

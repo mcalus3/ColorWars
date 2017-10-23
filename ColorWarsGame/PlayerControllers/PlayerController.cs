@@ -1,31 +1,31 @@
 ﻿using System;
-
 using ColorWars.Boards;
-using ColorWars.Players.States;
+using ColorWars.PlayerControllers.States;
+using ColorWars.Players;
 using ColorWars.Services;
 
-namespace ColorWars.Players
+namespace ColorWars.PlayerControllers
 {
-    class PlayerController
+    internal class PlayerController
     {
         public readonly PlayerModel Player;
         public int PlayerSpeed;
         public int DeathPenalty;
         public readonly BoardField StartField;
         public Direction BufferedDirection { get; set; }
-        public Direction Direction { get { return this.Player.Direction; } set { this.Player.Direction = value; } }
-        public BoardField Field { get { return this.Player.Position; } set { this.Player.Position = value; } }
-        public float MovementFraction { get { return this.Player.MovementFraction; } set { this.Player.MovementFraction = value; } }
+        public Direction Direction { get => this.Player.Direction;
+            set => this.Player.Direction = value;
+        }
+        public BoardField Field { get => this.Player.Position;
+            set => this.Player.Position = value;
+        }
+        public float MovementFraction { get => this.Player.MovementFraction;
+            set => this.Player.MovementFraction = value;
+        }
 
         public MovingState MovingState { get; set; }
 
-        public bool OnOwnTerritory
-        {
-            get
-            {
-                return this.Field.Owner == this.Player;
-            }
-        }
+        public bool OnOwnTerritory => this.Field.Owner == this.Player;
 
         public PlayerController(PlayerModel player, BoardField startField, int speed, int deathPenalty)
         {
