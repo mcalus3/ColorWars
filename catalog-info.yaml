@@ -1,0 +1,11 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ColorWars
+  annotations:
+    /project-slug: mcalus3/ColorWars
+spec:
+  type: other
+  owner: mcalus3
+  lifecycle: unknown
